@@ -33,7 +33,7 @@
     <link href="{% static 'healthcenter/signin.css' %}" rel="stylesheet">
   </head>
   <body class="text-center">
-    <form class="form-signin" method="post" action="{% url 'signin'  %}">{% csrf_token %}
+    <form class="form-signin" method="post" action="{% url 'login'  %}">{% csrf_token %}
   <img class="mb-4" src="{% static 'healthcenter/images/logo.png' %}" alt="" width="72" height="72">
   <h1 class="h3 mb-3 font-weight-normal">MNNIT Health Center</h1>
   <label for="inputEmail" class="sr-only">Username</label>
