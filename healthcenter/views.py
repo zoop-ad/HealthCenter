@@ -8,3 +8,6 @@ def index(request):
 @login_required(login_url='/accounts/login/')
 def dashboard(request):
     return render(request,'healthcenter/dashboard.html')
+
+def patient_registration(request):
+    return render(request,'healthcenter/patientreg.html')
