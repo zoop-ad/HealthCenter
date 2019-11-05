@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>Patient Registration</title>
+    <title>OPD Registration</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/checkout/">
 
@@ -39,7 +39,8 @@
     <div class="container">
   <div class="py-5 text-center">
     <img class="d-block mx-auto mb-4" src="{% static 'healthcenter/images/logo.png' %}" alt="" width="72" height="72">
-    <h2>Patient Registration Form</h2>
+    <h2>OPD Registration Form</h2>
+    <p class="lead">Please register as patient before OPD registraton.</p>
   </div>
 
   <div class="row">
@@ -52,19 +53,11 @@
                         <div class="invalid-feedback">
                           Valid card number is required.
                         </div>  
-                      </div>
-          <div class="col-md-6 mb-3">
-            <label for="firstName">Name</label>
-            <input type="text" class="form-control" id="firstName" name="fname" placeholder="" value="" required>
-            <div class="invalid-feedback">
-              Valid Name is required.
-            </div>  
-          </div>
-          
+                      </div>          
         </div>
 
         <div class="mb-3">
-          <label for="username">DOB (DD-MM-YYYY)</label>
+          <label for="username">Date</label>
           <div class="input-group">
             
             <input type="date" class="form-control" id="username" placeholder="" name="dob" required>

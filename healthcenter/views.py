@@ -11,3 +11,9 @@ def dashboard(request):
 
 def patient_registration(request):
     return render(request,'healthcenter/patientreg.html')
+
+def register_patient(request):
+    print(request.POST)
+
+def opdreg(request):
+    return render(request,'healthcenter/opdreg.html')

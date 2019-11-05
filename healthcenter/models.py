@@ -26,4 +26,12 @@ class Patient(models.Model):
     address = models.CharField(max_length=500)
     validity = models.DateField()
     sex = models.CharField(max_length=1)
-    blood_grp = models.CharField(max_length=2)
+    blood_grp = models.CharField(max_length=5)
+
+class OPDRegistration(models.Model):
+    cardNo = models.ForeignKey(Patient,on_delete=models.CASCADE)
+    appoint_date = models.DateField()
+    doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
+    checked = models.BooleanField(default=False)
+    checkup_time = models.TimeField()
+
