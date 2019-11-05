@@ -17,3 +17,9 @@ def register_patient(request):
 
 def opdreg(request):
     return render(request,'healthcenter/opdreg.html')
+
+def medavail(request):
+    return render(request,'healthcenter/medavail.html')
+
+def docavail(request):
+    return render(request,'healthcenter/docavail.html')

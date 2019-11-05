@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <title>OPD Registration</title>
+    <title>Check Doctor Availability</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/checkout/">
 
@@ -39,45 +39,32 @@
     <div class="container">
   <div class="py-5 text-center">
     <img class="d-block mx-auto mb-4" src="{% static 'healthcenter/images/logo.png' %}" alt="" width="72" height="72">
-    <h2>OPD Registration Form</h2>
-    <p class="lead">Please register as patient before OPD registraton.</p>
+    <h2>Check Doctor Availability</h2>
   </div>
 
   <div class="row">
     <div class="col-md-8 order-md-1">
       <form class="needs-validation" method="POST" action="/hc/registerpatient" novalidate>
         <div class="row">
-                <div class="col-md-6 mb-3">
-                        <label for="firstName">Card No.</label>
-                        <input type="text" class="form-control" name="cardno" id="firstName" placeholder="" value="" required>
-                        <div class="invalid-feedback">
-                          Valid card number is required.
-                        </div>  
-                      </div>          
-        </div>
-        <div class="mb-3">
-                <label for="address2">Date</label>
-                <input type="date" class="form-control" id="address2" placeholder="" name="dateofreg">
+                <div class="col-md-5 mb-3">
+                  <label for="country">Choose Doctor</label>
+                  <select class="custom-select d-block w-100" id="country" name="docreq" required>
+                    <option>Male</option>
+                    <option>Female</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select a doctor.
+                  </div>
+                </div>
+                
+                
               </div>
+
         
 
-        <div class="row">
-          <div class="col-md-5 mb-3">
-            <label for="country">Choose Doctor</label>
-            <select class="custom-select d-block w-100" id="country" name="docreq" required>
-              <option>Male</option>
-              <option>Female</option>
-            </select>
-            <div class="invalid-feedback">
-              Please select a valid sex.
-            </div>
-          </div>
-          
-          
-        </div>
         <hr class="mb-4">
 
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Register for OPD</button>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Search</button>
       </form>
     </div>
   </div>
