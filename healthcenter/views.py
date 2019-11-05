@@ -1,17 +1,10 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
-    print()
     return render(request, 'healthcenter/welcome.html')
 
+@login_required(login_url='/accounts/login/')
 def dashboard(request):
-    if request.user.is_authenticated == True:
-        return render(request,'healthcenter/dashboard.html')
-    else:
-        return redirect('/hc')
-
-# def signin(request):
-#     print(request.POST['username'])
-#     print(request.POST['password'])
-#     return render(request, 'healthcenter/signin.html')
+    return render(request,'healthcenter/dashboard.html')
