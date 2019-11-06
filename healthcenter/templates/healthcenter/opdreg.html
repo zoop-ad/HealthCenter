@@ -45,7 +45,8 @@
 
   <div class="row">
     <div class="col-md-8 order-md-1">
-      <form class="needs-validation" method="POST" action="/hc/registerpatient" novalidate>
+      <form class="needs-validation" method="POST" action="/hc/regopd" novalidate>
+        {% csrf_token %}
         <div class="row">
                 <div class="col-md-6 mb-3">
                         <label for="firstName">Card No.</label>
@@ -65,11 +66,12 @@
           <div class="col-md-5 mb-3">
             <label for="country">Choose Doctor</label>
             <select class="custom-select d-block w-100" id="country" name="docreq" required>
-              <option>Male</option>
-              <option>Female</option>
+              {% for dd in docs %}
+              <option value='{{dd.id}}'>{{dd.emp.first_name}} {{dd.emp.last_name}} - {{dd.specialization}}</option>
+              {% endfor %}
             </select>
             <div class="invalid-feedback">
-              Please select a valid sex.
+              Please select a valid doctor.
             </div>
           </div>
           

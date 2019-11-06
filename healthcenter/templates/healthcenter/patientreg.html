@@ -40,11 +40,15 @@
   <div class="py-5 text-center">
     <img class="d-block mx-auto mb-4" src="{% static 'healthcenter/images/logo.png' %}" alt="" width="72" height="72">
     <h2>Patient Registration Form</h2>
+    <div class="alert alert-success" role="alert">
+            {{msg}}
+          </div>
   </div>
 
   <div class="row">
     <div class="col-md-8 order-md-1">
       <form class="needs-validation" method="POST" action="/hc/registerpatient" novalidate>
+        {% csrf_token %}
         <div class="row">
                 <div class="col-md-6 mb-3">
                         <label for="firstName">Card No.</label>
@@ -84,7 +88,7 @@
 
         <div class="mb-3">
           <label for="address">Address</label>
-          <input type="text" class="form-control" id="address" placeholder="" required>
+          <input type="text" class="form-control" id="address" placeholder="" name="addr" required>
           <div class="invalid-feedback">
             Please enter your address.
           </div>

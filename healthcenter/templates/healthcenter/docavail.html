@@ -43,19 +43,56 @@
   </div>
 
   <div class="row">
+      <div class="col-md-4 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Results</span>
+            <span class="badge badge-secondary badge-pill">{{times|length}}</span>
+          </h4>
+          <ul class="list-group mb-3">
+            {%for x in times%}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{x.day}}</h6>
+                <small class="text-muted">Brief description</small>
+              </div>
+              <span class="text-muted">{{x.in_time}} - {{x.out_time}}</span>
+            </li>
+            {% endfor %}
+          </ul>
+    
+          
+        </div>
     <div class="col-md-8 order-md-1">
-      <form class="needs-validation" method="POST" action="/hc/registerpatient" novalidate>
+      <form class="needs-validation" method="POST" action="/hc/docavailcheck" novalidate>
+        {% csrf_token %}
         <div class="row">
                 <div class="col-md-5 mb-3">
                   <label for="country">Choose Doctor</label>
                   <select class="custom-select d-block w-100" id="country" name="docreq" required>
-                    <option>Male</option>
-                    <option>Female</option>
+                      {% for dd in docs %}
+              <option value='{{dd.id}}'>Dr. {{dd.emp.first_name}} {{dd.emp.last_name}} - {{dd.specialization}}</option>
+              {% endfor %}
                   </select>
                   <div class="invalid-feedback">
                     Please select a doctor.
                   </div>
                 </div>
+
+                <div class="col-md-5 mb-3">
+                    <label for="country">Day</label>
+                    <select class="custom-select d-block w-100" id="country" name="day" required>
+                      <option value='SUN'>Sunday</option>
+                      <option value='MON'>Monday</option>
+                      <option value='TUE'>Tuesday</option>
+                      <option value='WED'>Wednesday</option>
+                      <option value='THU'>Thursday</option>
+                      <option value='FRI'>Friday</option>
+                      <option value='SAT'>Saturday</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid sex.
+                    </div>
+                  </div>
                 
                 
               </div>

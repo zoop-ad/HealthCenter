@@ -8,7 +8,9 @@ urlpatterns = [
     path('patientreg',views.patient_registration),
     path('registerpatient',views.register_patient),
     path('opdreg',views.opdreg),
+    path('regopd',views.regopd),
     path('medavail',views.medavail),
-    path('docavail',views.docavail)
+    path('docavail',views.docavail),
+    path('docavailcheck',views.docavailcheck)
 ]
 
