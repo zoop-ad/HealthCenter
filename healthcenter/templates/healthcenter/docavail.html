@@ -45,7 +45,7 @@
   <div class="row">
       <div class="col-md-4 order-md-2 mb-4">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Results</span>
+            <span class="text-muted">Time Slots</span>
             <span class="badge badge-secondary badge-pill">{{times|length}}</span>
           </h4>
           <ul class="list-group mb-3">
@@ -53,7 +53,6 @@
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
                 <h6 class="my-0">{{x.day}}</h6>
-                <small class="text-muted">Brief description</small>
               </div>
               <span class="text-muted">{{x.in_time}} - {{x.out_time}}</span>
             </li>
@@ -109,6 +108,6 @@
 
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-      <script>window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+      <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script>
         <script src="{% static 'healthcenter/form-validation.js' %}"></script></body>
 </html>

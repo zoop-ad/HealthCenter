@@ -11,6 +11,10 @@ urlpatterns = [
     path('regopd',views.regopd),
     path('medavail',views.medavail),
     path('docavail',views.docavail),
-    path('docavailcheck',views.docavailcheck)
+    path('docavailcheck',views.docavailcheck),
+    path('diagnose',views.diagnose),
+    path('diagnosepatient',views.diagnosepatient),
+    path('feedback',views.feedback),
+    path('submitfeedback',views.submitfeedback)
 ]
 
