@@ -1,0 +1,48 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+    <head>
+        <title>Patient History</title>
+        <link href="{% static 'healthcenter/history.css' %}" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" >
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+            <div class="container">
+                    <!-- For demo purpose -->
+                    <div class="row py-5">
+                      <div class="col-lg-9 mx-auto text-white text-center">
+                        <h1 class="display-4">Patient History</h1>
+                        <p class="lead mb-0"><b>Name : </b>{{pat.name}}</p>
+                      </div>
+                    </div>
+                  
+                  
+                    <div class="row">
+                      <div class="col-lg-9 mx-auto">
+                        <!-- Accordion -->
+                        <div id="accordionExample" class="accordion shadow">
+                  {% for h in history%}
+                          <!-- Accordion item 1 -->
+                          <div class="card">
+                            <div id="heading{{forloop.counter}}" class="card-header bg-white shadow-sm border-0">
+                              <h6 class="mb-0 font-weight-bold"><a href="#" data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="false" aria-controls="collapse{{forloop.counter}}" class="d-block position-relative collapsed text-dark text-uppercase collapsible-link py-2">{{h.timestamp}}</a></h6>
+                            </div>
+                            <div id="collapse{{forloop.counter}}" aria-labelledby="heading{{forloop.counter}}" data-parent="#accordionExample" class="collapse">
+                              <div class="card-body p-5">
+                                <p><b>Diagnosis</b> : {{h.diagnosis}}</p>
+                                <p><b>Prescription</b> : {{h.pres_given}}</p>
+                                <p><b>Pathology</b> : {{h.pathology}}</p>
+                                <p><b>Advice</b> : {{h.advice}}</p>
+                              </div>
+                            </div>
+                          </div>
+{% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    </body>
+</html>

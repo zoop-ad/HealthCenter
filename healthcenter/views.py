@@ -15,9 +15,10 @@ def dashboard(request):
         doc = Doctor.objects.filter(emp=empl)[0]
         today = date.today()
         opds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today)
-        return render(request,'healthcenter/dashboard.html',{'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds})
+        return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds})
     elif request.user.groups.all()[0].name=="Pharmacist":
-        return render(request,'healthcenter/dashboard.html',{'msg':'Hello Pharmacist '+str(request.user)})    
+        pst = get_object_or_404(Employee,pk=str(request.user))
+        return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Pharmacist '+pst.first_name + ' '+pst.last_name})    
 
 def patient_registration(request):
     return render(request,'healthcenter/patientreg.html')
@@ -87,3 +88,11 @@ def submitfeedback(request):
     fb = Feedback(name=request.POST['name'],email=request.POST['email'],review=request.POST['review'],cleanliness=request.POST['radio'],med_availability=request.POST['radio1'],staff_behaviour=request.POST['radio2'],overall_satisfaction=request.POST['radio3'],rating=request.POST['rating'],suggestion=request.POST['suggestion'])
     fb.save()
     return HttpResponseRedirect('/hc')
+
+def gethistory(request):
+    print(request.GET)
+    cno = request.GET['cno']
+    print(cno)
+    pat = get_object_or_404(Patient,pk=cno)
+    history = MedicalDiagnosis.objects.filter(patient=pat)
+    return render(request,'healthcenter/history.html',{'history':history,'pat':pat})
