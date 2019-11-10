@@ -96,3 +96,4 @@ def gethistory(request):
     pat = get_object_or_404(Patient,pk=cno)
     history = MedicalDiagnosis.objects.filter(patient=pat)
     return render(request,'healthcenter/history.html',{'history':history,'pat':pat})
+
