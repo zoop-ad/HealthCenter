@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Distribute Medicines</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <style>
+        .second{
+    position: relative;
+    top: 250px;
+}
+.entry:not(:first-of-type)
+{
+    margin-top: 10px;
+}
+
+.glyphicon
+{
+    font-size: 12px;
+}
+    </style>
+</head>
+<body class="bg-light">
+        <div class="py-5 text-center">
+                <img class="d-block mx-auto mb-4" src="{% static 'healthcenter/images/logo.png' %}" alt="" width="72" height="72">
+                <h2>Distribute Medicine - {{dgs.patient.name}}</h2><br>
+                <p><b>Prescription : </b>{{dgs.pres_given}}</p>
+              
+        <div class="container">
+                <div class="row">
+                    <div class="control-group" id="fields">
+                        <div class="controls"> 
+                            <form role="form" autocomplete="off" action="/hc/distributemed?dgsid={{dgsid}}" method="POST">{% csrf_token %}
+                                <div class="entry input-group col-xs-3">
+                                    <input class="form-control" name="meds" type="text" placeholder="Medicine Name" />
+                                    <input class="form-control" name="qty" type="number" placeholder="Quantity" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success btn-add" type="button">
+                                            <span class="glyphicon glyphicon-plus">Add Medicine</span>
+                                        </button>
+                                    </span>
+                                    <br>
+                                </div>
+                                
+                            
+                        <div class="second">
+                        <button type="submit">Submit</button></form>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </form>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.slim.min.js" integrity="sha384-7WBfQYubrFpye+dGHEeA3fHaTy/wpTFhxdjxqvK04e4orV3z+X4XC4qOX3qnkVC6" crossorigin="anonymous"></script>
+  <script>
+  $(function()
+{
+    $(document).on('click', '.btn-add', function(e)
+    {
+        e.preventDefault();
+
+        var controlForm = $('.controls form:first'),
+            currentEntry = $(this).parents('.entry:first'),
+            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+        newEntry.find('input').val('');
+        controlForm.find('.entry:not(:last) .btn-add')
+            .removeClass('btn-add').addClass('btn-remove')
+            .removeClass('btn-success').addClass('btn-danger')
+            .html('<span class="glyphicon glyphicon-minus">Remove Medicine</span>');
+    }).on('click', '.btn-remove', function(e)
+    {
+		$(this).parents('.entry:first').remove();
+
+		e.preventDefault();
+		return false;
+	});
+});
+
+  </script>
+</body>
+</html>

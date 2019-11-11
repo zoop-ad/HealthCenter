@@ -49,6 +49,7 @@ class MedicalDiagnosis(models.Model):
     diagnosis = models.CharField(max_length=1000)
     pres_given = models.CharField(max_length=1000)
     pathology = models.CharField(max_length=1000)
+    med_given = models.BooleanField(default=False)
 
 class Feedback(models.Model):
     params = (('Very Good','Very Good'),('Good','Good'),('Fair','Fair'),('Poor','Poor'))
@@ -61,3 +62,8 @@ class Feedback(models.Model):
     overall_satisfaction = models.CharField(max_length=100,choices=params)
     rating = models.IntegerField()
     suggestion = models.CharField(max_length=5000)
+
+class MedicineDistribution(models.Model):
+    diagnosis = models.ForeignKey(MedicalDiagnosis,on_delete=models.CASCADE)
+    medicine_name = models.CharField(max_length=100)
+    quantity = models.IntegerField()

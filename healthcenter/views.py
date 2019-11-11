@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Patient,Employee,Timing,OPDRegistration,Doctor,MedicalDiagnosis,Feedback
+from .models import Patient,Employee,Timing,OPDRegistration,Doctor,MedicalDiagnosis,Feedback,MedicineDistribution
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import date
 # Create your views here.
@@ -16,9 +16,12 @@ def dashboard(request):
         today = date.today()
         opds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today)
         return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds})
-    elif request.user.groups.all()[0].name=="Pharmacist":
+    else:
         pst = get_object_or_404(Employee,pk=str(request.user))
-        return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Pharmacist '+pst.first_name + ' '+pst.last_name})    
+        print(pst)
+        dgs = MedicalDiagnosis.objects.filter(med_given=False)
+        print(dgs)
+        return render(request,'healthcenter/pharmacist-dashboard.html',{'msg':'Pharmacist '+pst.first_name + ' '+pst.last_name,'dgs':dgs})
 
 def patient_registration(request):
     return render(request,'healthcenter/patientreg.html')
@@ -97,3 +100,22 @@ def gethistory(request):
     history = MedicalDiagnosis.objects.filter(patient=pat)
     return render(request,'healthcenter/history.html',{'history':history,'pat':pat})
 
+def distribute(request):
+    dgsid = request.GET['dgsid']
+    dgs = get_object_or_404(MedicalDiagnosis,pk=dgsid)
+    print(dgs)
+    return render(request,'healthcenter/distribute.html',{'dgsid':dgsid,'dgs':dgs})
+
+def distributemed(request):
+    dgsid = request.GET['dgsid']
+    dgs = get_object_or_404(MedicalDiagnosis,pk=dgsid)
+    meds = request.POST.getlist('meds')
+    qty = request.POST.getlist('qty')
+    dgs.med_given=True
+    dgs.save()
+    i=0
+    while i<len(meds):
+        medd = MedicineDistribution(diagnosis=dgs,medicine_name=meds[i],quantity=qty[i])
+        medd.save()
+        i+=1
+    return HttpResponseRedirect('/hc/dashboard')

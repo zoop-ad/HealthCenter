@@ -35,23 +35,7 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'healthcenter/form-validation.css' %}" rel="stylesheet">
 
-    <script>
-var room = 1;
-function education_fields() {
- 
-    room++;
-    var objTo = document.getElementById('education_fields')
-    var divtest = document.createElement("div");
-	divtest.setAttribute("class", "form-group removeclass"+room);
-	var rdiv = 'removeclass'+room;
-    divtest.innerHTML = '<div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Schoolname" name="Schoolname[]" value="" placeholder="School name"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Major" name="Major[]" value="" placeholder="Major"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Degree" name="Degree[]" value="" placeholder="Degree"></div></div><div class="col-sm-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="educationDate" name="educationDate[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_education_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
-    
-    objTo.appendChild(divtest)
-}
-   function remove_education_fields(rid) {
-	   $('.removeclass'+rid).remove();
-   }
-    </script>
+
   </head>
   <body class="bg-light">
     <div class="container">
@@ -120,23 +104,14 @@ function education_fields() {
             Please enter your address.
           </div>
         </div>
-
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="firstName">Medicine</label>
-          <input type="text" class="form-control" name="med" id="firstName" placeholder="" value="" required>
+        <div class="mb-3">
+          <label for="address">Prescription</label>
+          <textarea class="form-control" id="address" placeholder="" name="pc" required></textarea>
           <div class="invalid-feedback">
-            Valid card number is required.
-          </div>  
+            Please enter your address.
+          </div>
         </div>
-<div class="col-md-6 mb-3">
-<label for="firstName">Quantity</label>
-<input type="text" class="form-control" id="firstName" name="qty" placeholder="" value="" required>
-<div class="invalid-feedback">
-Valid Name is required.
-</div>  
-</div>
-</div>
+      
               <div class="mb-3">
                     <label for="address">Advice</label>
                     <input type="text" class="form-control" id="address" placeholder="" name="adv" required>

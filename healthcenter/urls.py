@@ -16,6 +16,8 @@ urlpatterns = [
     path('diagnosepatient',views.diagnosepatient),
     path('feedback',views.feedback),
     path('submitfeedback',views.submitfeedback),
-    path('gethistory',views.gethistory)
+    path('gethistory',views.gethistory),
+    path('distribute',views.distribute),
+    path('distributemed',views.distributemed)
 ]
 
