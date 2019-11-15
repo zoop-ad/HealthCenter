@@ -32,6 +32,7 @@
         }
       }
     </style>
+    
     <!-- Custom styles for this template -->
     <link href="{% static 'healthcenter/form-validation.css' %}" rel="stylesheet">
   </head>
@@ -56,6 +57,7 @@
                         </div>  
                       </div>          
         </div>
+        
         <div class="mb-3">
                 <label for="address2">Date</label>
                 <input type="date" class="form-control" id="address2" placeholder="" name="dateofreg">
@@ -88,5 +90,12 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
       <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script>
-        <script src="{% static 'healthcenter/form-validation.js' %}"></script></body>
+        <script src="{% static 'healthcenter/form-validation.js' %}"></script>
+        <script>
+          
+
+          let today = new Date().toISOString().substr(0, 10);
+          document.querySelector("#address2").value = today;
+                    </script>
+      </body>
 </html>
