@@ -8,7 +8,7 @@ from random import randint
 # Create your views here.
 
 def index(request):
-    return render(request, 'healthcenter/welcome.html')
+    return render(request, 'healthcenter/front.html')
 
 @login_required(login_url='/accounts/login/')
 def dashboard(request):
@@ -134,3 +134,6 @@ def verifyOTP(request):
         return render(request,'healthcenter/thanks.html')
     else:
         return render(request,'healthcenter/verify.html',{'em':fb.email,'fbid':fb.id,'fl':2})
+
+def ffront(request):
+    return render(request,'healthcenter/front.html')     
