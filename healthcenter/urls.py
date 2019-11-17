@@ -18,6 +18,7 @@ urlpatterns = [
     path('submitfeedback',views.submitfeedback),
     path('gethistory',views.gethistory),
     path('distribute',views.distribute),
-    path('distributemed',views.distributemed)
+    path('distributemed',views.distributemed),
+    path('verifyotp',views.verifyOTP)
 ]
 

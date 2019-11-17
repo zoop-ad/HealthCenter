@@ -1,0 +1,86 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+        <link href="{% static 'healthcenter/verify.css' %}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  </head>
+  <body>
+    <div class="container">
+        <div class="row">
+        <div class="col-sm-6 col-sm-offset-2" ><!-- col -->
+            <h2><h1>Check your email!</h1></h2>
+            <p class="desc">We’ve sent a six-digit confirmation code to <strong>{{em}}</strong>. Enter it below to confirm your email address.</p>
+            <br><br><br>
+           <label><span class="normal">Your </span>confirmation code</label>
+           <form action="/hc/verifyotp?fbid={{fbid}}" method="POST">{% csrf_token %}
+             <div class="confirmation_code split_input large_bottom_margin" data-multi-input-code="true">
+                    <div class="confirmation_code_group">
+                        <div class="split_input_item input_wrapper"><input type="text" class="inline_input" maxlength="1" name="d1"></div>
+                        <div class="split_input_item input_wrapper"><input type="text" class="inline_input" maxlength="1" name="d2"></div>
+                        <div class="split_input_item input_wrapper"><input type="text" class="inline_input" maxlength="1" name="d3"></div>
+                    </div>
+                    <div class="confirmation_code_span_cell">—</div>
+                    <div class="confirmation_code_group">
+                        <div class="split_input_item input_wrapper"><input type="text" class="inline_input" maxlength="1" name="d4"></div>
+                        <div class="split_input_item input_wrapper"><input type="text" class="inline_input" maxlength="1" name="d5"></div>
+                        <div class="split_input_item input_wrapper"><input type="text" class="inline_input" maxlength="1" name="d6"></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-success">Verify</button><br>
+              
+            </form>
+                </div><!-- endof col -->
+        </div>
+    </div>
+      <script>
+      $(function() {
+  'use strict';
+
+  var body = $('body');
+
+  function goToNextInput(e) {
+    var key = e.which,
+      t = $(e.target),
+      sib = t.next('input');
+
+    if (key != 9 && (key < 48 || key > 57)) {
+      e.preventDefault();
+      return false;
+    }
+
+    if (key === 9) {
+      return true;
+    }
+
+    if (!sib || !sib.length) {
+      sib = body.find('input').eq(0);
+    }
+    sib.select().focus();
+  }
+
+  function onKeyDown(e) {
+    var key = e.which;
+
+    if (key === 9 || (key >= 48 && key <= 57)) {
+      return true;
+    }
+
+    e.preventDefault();
+    return false;
+  }
+  
+  function onFocus(e) {
+    $(e.target).select();
+  }
+
+  body.on('keyup', 'input', goToNextInput);
+  body.on('keydown', 'input', onKeyDown);
+  body.on('click', 'input', onFocus);
+
+})
+      </script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  </body>
+</html>

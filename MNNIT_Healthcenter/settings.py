@@ -11,11 +11,13 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+SENDGRID_SANDBOX_MODE_IN_DEBUG=False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 

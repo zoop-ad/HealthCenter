@@ -62,6 +62,8 @@ class Feedback(models.Model):
     overall_satisfaction = models.CharField(max_length=100,choices=params)
     rating = models.IntegerField()
     suggestion = models.CharField(max_length=5000)
+    otp = models.IntegerField(default=123456)
+    verified = models.BooleanField(default=False)
 
 class MedicineDistribution(models.Model):
     diagnosis = models.ForeignKey(MedicalDiagnosis,on_delete=models.CASCADE)

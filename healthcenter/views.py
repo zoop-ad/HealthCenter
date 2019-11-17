@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Patient,Employee,Timing,OPDRegistration,Doctor,MedicalDiagnosis,Feedback,MedicineDistribution
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import date
+from django.core.mail import send_mail
+from random import randint
 # Create your views here.
 
 def index(request):
@@ -88,9 +90,11 @@ def feedback(request):
     return render(request,'healthcenter/feedback.html')
 
 def submitfeedback(request):
-    fb = Feedback(name=request.POST['name'],email=request.POST['email'],review=request.POST['review'],cleanliness=request.POST['radio'],med_availability=request.POST['radio1'],staff_behaviour=request.POST['radio2'],overall_satisfaction=request.POST['radio3'],rating=request.POST['rating'],suggestion=request.POST['suggestion'])
-    fb.save()
-    return HttpResponseRedirect('/hc')
+    otp = randint(100000,999999)
+    fb = Feedback(name=request.POST['name'],email=request.POST['email'],review=request.POST['review'],cleanliness=request.POST['radio'],med_availability=request.POST['radio1'],staff_behaviour=request.POST['radio2'],overall_satisfaction=request.POST['radio3'],rating=request.POST['rating'],suggestion=request.POST['suggestion'],otp=otp,verified=False)
+    fb.save()    
+    send_mail('MNNIT Health Center Feedback Verification OTP','Your OTP is - '+str(otp),'amulya@mnnit.ac.in',[str(fb.email)],fail_silently=False)
+    return render(request,'healthcenter/verify.html',{'em':fb.email,'fbid':fb.id,'fl':1})
 
 def gethistory(request):
     print(request.GET)
@@ -119,3 +123,14 @@ def distributemed(request):
         medd.save()
         i+=1
     return HttpResponseRedirect('/hc/dashboard')
+
+def verifyOTP(request):
+    fbid = request.GET['fbid']
+    fb = get_object_or_404(Feedback,pk=fbid)
+    otp = int(str(request.POST['d1'])+str(request.POST['d2'])+str(request.POST['d3'])+str(request.POST['d4'])+str(request.POST['d5'])+str(request.POST['d6']))
+    if otp==fb.otp:
+        fb.verified=True
+        fb.save()
+        return render(request,'healthcenter/thanks.html')
+    else:
+        return render(request,'healthcenter/verify.html',{'em':fb.email,'fbid':fb.id,'fl':2})
