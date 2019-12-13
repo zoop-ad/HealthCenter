@@ -69,3 +69,7 @@ class MedicineDistribution(models.Model):
     diagnosis = models.ForeignKey(MedicalDiagnosis,on_delete=models.CASCADE)
     medicine_name = models.CharField(max_length=100)
     quantity = models.IntegerField()
+
+class Medicine(models.Model):
+    med_name = models.CharField(max_length=100)
+    cur_stock = models.IntegerField()
