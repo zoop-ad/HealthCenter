@@ -31,7 +31,7 @@ def patient_registration(request):
 def register_patient(request):
     np = Patient(cardNo=request.POST['cardno'],name=request.POST['fname'],dob=request.POST['dob'],contact_no=request.POST['cno'],address=request.POST['addr'],validity=request.POST['validity'],sex=request.POST['sex'],blood_grp=request.POST['bg'])
     np.save()
-    return HttpResponseRedirect('/hc/')
+    return render(request,'healthcenter/front.html',{'msg':'Patient ' +request.POST['cardno']+' is successfully registered.'})
 
 def opdreg(request):
     doc_list = Doctor.objects.all()
