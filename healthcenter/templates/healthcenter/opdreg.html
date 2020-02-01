@@ -45,7 +45,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-8 order-md-1">
+    <div class="col-md-11 order-md-1">
       <form class="needs-validation" method="POST" action="/hc/regopd" novalidate>
         {% csrf_token %}
         <div class="row">
@@ -80,8 +80,17 @@
           
         </div>
         <hr class="mb-4">
-
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Register for OPD</button>
+<div><center>
+        <button class="btn btn-primary btn-lg " type="submit">Register for OPD</button></div></center>
+        <div>
+          <br>
+          
+      </div>
+      </form>
+      <form method="GET" action="/hc">
+        <center>
+        <button class="btn btn-primary btn-lg " type="submit">Back to Home</button>
+      </center>
       </form>
     </div>
   </div>

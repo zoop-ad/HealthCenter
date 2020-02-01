@@ -60,7 +60,6 @@ def docavailcheck(request):
     timings = Timing.objects.filter(dr=doc).filter(day=days)
     doc_list = Doctor.objects.all()
     nm = 'Dr. '+doc.emp.first_name + ' ' + doc.emp.last_name
-    print(nm)
     return render(request,'healthcenter/docavail.html',{'times':timings,'docs':doc_list,'docname':nm})
 
 def diagnose(request):

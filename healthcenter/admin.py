@@ -3,7 +3,7 @@ from .models import Doctor,Patient,Employee,Timing,OPDRegistration,Feedback,Medi
 # Register your models here.
 admin.site.site_title = "MNNIT Health Center Admin"
 admin.site.site_header = "MNNIT Health Center Admin"
-
+admin.site.site_url = "/hc"
 
 admin.site.register(Patient)
 admin.site.register(Timing)

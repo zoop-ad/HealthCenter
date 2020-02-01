@@ -66,7 +66,7 @@
       <form class="needs-validation" method="POST" action="/hc/docavailcheck" novalidate>
         {% csrf_token %}
         <div class="row">
-                <div class="col-md-5 mb-3">
+                <div class="col-md-9 mb-3">
                   <label for="country">Choose Doctor</label>
                   <select class="custom-select d-block w-100" id="country" name="docreq" required>
                       {% for dd in docs %}
@@ -78,7 +78,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-5 mb-3">
+                <div class="col-md-9 mb-3">
                     <label for="country">Day</label>
                     <select class="custom-select d-block w-100" id="country" name="day" required>
                       <option value='SUN'>Sunday</option>
@@ -101,7 +101,12 @@
 
         <hr class="mb-4">
 
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Search</button>
+        <button class="btn btn-primary btn-lg " type="submit">Search</button>
+      </form>
+      <br>
+      <form method="GET" action="/hc">
+        <button class="btn btn-primary btn-lg " type="submit">Back to Home</button>
+
       </form>
     </div>
   </div>

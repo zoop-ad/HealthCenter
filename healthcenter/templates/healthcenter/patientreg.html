@@ -50,14 +50,14 @@
       <form class="needs-validation" method="POST" action="/hc/registerpatient" novalidate>
         {% csrf_token %}
         <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-12 mb-3">
                         <label for="firstName">Card No.</label>
                         <input type="text" class="form-control" name="cardno" id="firstName" placeholder="" value="" required>
                         <div class="invalid-feedback">
                           Valid card number is required.
                         </div>  
                       </div>
-          <div class="col-md-6 mb-3">
+          <div class="col-md-12 mb-3">
             <label for="firstName">Name</label>
             <input type="text" class="form-control" id="firstName" name="fname" placeholder="" value="" required>
             <div class="invalid-feedback">
@@ -129,12 +129,19 @@
           
         </div>
         <hr class="mb-4">
-
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Register</button>
+<center>
+        <button class="btn btn-primary btn-lg " type="submit">Register</button>
+      
       </form>
+      <br>
+      <br>
+      <form method="GET" action="/hc">
+        <button class="btn btn-primary btn-lg " type="submit">Back to Home</button>
+
+      </form></center>
     </div>
   </div>
-
+<br>
 
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
