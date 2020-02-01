@@ -44,7 +44,7 @@ def regopd(request):
     doc = get_object_or_404(Doctor,pk=drno)
     reg = OPDRegistration(patient=pat,appoint_date=request.POST['dateofreg'],doctor=doc,checked=False)
     reg.save()
-    return render(request,'healthcenter/front.html',{'msg':'Successfully Registered for OPD on '+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name})
+    return render(request,'healthcenter/front.html',{'msg':'Successfully Registered for OPD on '+card+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name})
 
 def medavail(request):
     return render(request,'healthcenter/medavail.html')
