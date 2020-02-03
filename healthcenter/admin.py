@@ -5,7 +5,11 @@ admin.site.site_title = "MNNIT Health Center Admin"
 admin.site.site_header = "MNNIT Health Center Admin"
 admin.site.site_url = "/hc"
 
-admin.site.register(Patient)
+class PatientAdmin(admin.ModelAdmin):
+    list_display = ('cardNo','name','contact_no')
+
+
+admin.site.register(Patient,PatientAdmin)
 admin.site.register(Timing)
 
 class EmployeeAdmin(admin.ModelAdmin):
