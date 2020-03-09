@@ -1,10 +1,11 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect,get_object_or_404,get_list_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Patient,Employee,Timing,OPDRegistration,Doctor,MedicalDiagnosis,Feedback,MedicineDistribution
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import date
 from django.core.mail import send_mail
 from random import randint
+import datetime
 # Create your views here.
 
 def index(request):
@@ -40,11 +41,24 @@ def opdreg(request):
 def regopd(request):
     card = request.POST['cardno']
     drno = request.POST['docreq']
-    pat = get_object_or_404(Patient,pk=card)
-    doc = get_object_or_404(Doctor,pk=drno)
+    dt = request.POST['dateofreg']
+    year,month,day = dt.split('-')
+    day_name = datetime.date(int(year), int(month), int(day)).strftime("%A").upper()[0:3]
+    try:
+        pat = get_object_or_404(Patient,pk=card)
+        doc = get_object_or_404(Doctor,pk=drno)
+    except:
+        doc_list = Doctor.objects.all()
+        return render(request,'healthcenter/opdreg.html',{'docs':doc_list,'err':'Patient not registered'})
+    try:
+        tim = get_list_or_404(Timing,dr=doc,day=day_name)
+    except:
+        doc_list = Doctor.objects.all()
+        return render(request,'healthcenter/opdreg.html',{'docs':doc_list,'err':'Doctor not available on given date'})
+    print(tim)
     reg = OPDRegistration(patient=pat,appoint_date=request.POST['dateofreg'],doctor=doc,checked=False)
     reg.save()
-    return render(request,'healthcenter/front.html',{'msg':'Successfully Registered for OPD on '+card+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name})
+    return render(request,'healthcenter/front.html',{'msg':'Successfully Registered for OPD on '+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name})
 
 def medavail(request):
     return render(request,'healthcenter/medavail.html')
