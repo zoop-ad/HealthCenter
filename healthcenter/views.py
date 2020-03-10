@@ -81,6 +81,8 @@ def diagnose(request):
     opd = get_object_or_404(OPDRegistration,pk=opdid)
     pat = get_object_or_404(Patient,pk=opd.patient.cardNo)
     history = MedicalDiagnosis.objects.filter(patient=pat)
+    if len(history)>5:
+        history=history[0:5]
     return render(request,'healthcenter/diagnose.html',{'pat':pat,'history':history,'opdid':opdid,'cno':opd.patient.cardNo})
 
 def diagnosepatient(request):
