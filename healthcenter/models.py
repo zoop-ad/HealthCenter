@@ -65,11 +65,32 @@ class Feedback(models.Model):
     otp = models.IntegerField(default=123456)
     verified = models.BooleanField(default=False)
 
+class Medicine(models.Model):
+    name = models.CharField(max_length=100)
+    authorized = models.BooleanField(default=True)
+    shortage_quantity = models.IntegerField()
+    
 class MedicineDistribution(models.Model):
     diagnosis = models.ForeignKey(MedicalDiagnosis,on_delete=models.CASCADE)
-    medicine_name = models.CharField(max_length=100)
+    medicine = models.ForeignKey(Medicine,on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
-class Medicine(models.Model):
-    med_name = models.CharField(max_length=100)
-    cur_stock = models.IntegerField()
+
+
+class MedicineStock(models.Model):
+    medicine = models.ForeignKey(Medicine,on_delete=models.CASCADE)
+    current_stock = models.IntegerField()
+    expiry_date = models.DateField()
+
+class MedicinePurchase(models.Model):
+    medicine = models.ForeignKey(Medicine,on_delete=models.CASCADE)
+    purchased_from = models.CharField(max_length=1000)
+    purchase_order_no = models.IntegerField()
+    purchase_order_date = models.DateField()
+    bill_no = models.IntegerField()
+    billing_date = models.DateField()
+    medicine_quantity = models.IntegerField()
+    amount = models.DecimalField(max_digits=1000,decimal_places=10)
+    mf_date = models.DateField()
+    expiry_date = models.DateField()
+    timestamp = models.DateTimeField()
