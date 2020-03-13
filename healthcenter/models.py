@@ -34,7 +34,7 @@ class Patient(models.Model):
     contact_no = models.CharField(max_length=200)
     address = models.CharField(max_length=500)
     validity = models.DateField()
-    sex = models.CharField(max_length=1)
+    sex = models.CharField(max_length=10)
     blood_grp = models.CharField(max_length=5)
 
     def __str__(self):
