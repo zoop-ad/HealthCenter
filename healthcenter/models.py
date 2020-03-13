@@ -9,10 +9,16 @@ class Employee(models.Model):
     last_name = models.CharField(max_length=100)
     designation = models.CharField(max_length=100,choices=desg,default="Doctor")
 
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name + ' - ' + self.designation
+
 class Doctor(models.Model):
     emp = models.ForeignKey(Employee,on_delete=models.CASCADE,default=0)
     room_no = models.IntegerField()
     specialization = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.emp.first_name + ' ' + self.emp.last_name + ' - ' + self.specialization
 
 class Timing(models.Model):
     DAYS =(('SUN','Sunday'),('MON','Monday'),('TUE','Tuesday'),('WED','Wednesday'),('THU','Thursday'),('FRI','Friday'),('SAT','Saturday'))
@@ -31,12 +37,18 @@ class Patient(models.Model):
     sex = models.CharField(max_length=1)
     blood_grp = models.CharField(max_length=5)
 
+    def __str__(self):
+        return self.cardNo + ' - ' + self.name
+
 class OPDRegistration(models.Model):
     patient = models.ForeignKey(Patient,on_delete=models.CASCADE)
     appoint_date = models.DateField()
     doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
     checked = models.BooleanField(default=False)
     checkup_time = models.TimeField(default=now)
+
+    def __str__(self):
+        return self.id + '- ' + self.patient.name + ' with Dr. '+ self.doctor.emp.first_name
 
 class MedicalDiagnosis(models.Model):
     patient = models.ForeignKey(Patient,on_delete=models.CASCADE)
