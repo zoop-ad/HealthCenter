@@ -12,6 +12,7 @@ urlpatterns = [
     path('medavail',views.medavail),
     path('docavail',views.docavail),
     path('docavailcheck',views.docavailcheck),
+    path('medavailcheck',views.medavailcheck),
     path('diagnose',views.diagnose),
     path('diagnosepatient',views.diagnosepatient),
     path('feedback',views.feedback),

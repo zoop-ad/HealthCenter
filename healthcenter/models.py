@@ -83,7 +83,7 @@ class Medicine(models.Model):
     shortage_quantity = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return str(self.id) + ' - ' +self.name
     
 class MedicineDistribution(models.Model):
     diagnosis = models.ForeignKey(MedicalDiagnosis,on_delete=models.CASCADE)

@@ -40,9 +40,11 @@
   <div class="py-5 text-center">
     <img class="d-block mx-auto mb-4" src="{% static 'healthcenter/images/logo.png' %}" alt="" width="72" height="72">
     <h2>Patient Registration Form</h2>
+    {% if msg %}
     <div class="alert alert-success" role="alert">
             {{msg}}
           </div>
+          {% endif %}
   </div>
 
   <div class="row">

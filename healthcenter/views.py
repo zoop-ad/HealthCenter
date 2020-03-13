@@ -76,6 +76,19 @@ def docavailcheck(request):
     nm = 'Dr. '+doc.emp.first_name + ' ' + doc.emp.last_name
     return render(request,'healthcenter/docavail.html',{'times':timings,'docs':doc_list,'docname':nm})
 
+def medavailcheck(request):
+    med = request.POST['med']
+    try:
+        medicine_obj = Medicine.objects.get(name=med)
+    except:
+        return render(request,'healthcenter/medavail.html',{'err':'No such medicine exists'})
+    try:
+        stck = get_list_or_404(MedicineStock,medicine = medicine_obj)
+    except:
+        return render(request,'healthcenter/medavail.html',{'msg':'Not Available','stck':[{'current_stock':0,'expiry_date':'NA'}],'medname':med})
+    print(stck)
+    return render(request,'healthcenter/medavail.html',{'msg':'Available','stck':stck,'medname':med})
+
 def diagnose(request):
     opdid = request.GET['opdid']
     opd = get_object_or_404(OPDRegistration,pk=opdid)
