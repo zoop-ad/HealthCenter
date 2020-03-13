@@ -1,1 +1,1 @@
-web: gunicorn healthcenter.wsgi --log-file -
+web: gunicorn MNNIT_Healthcenter.wsgi --log-file -
