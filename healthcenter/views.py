@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404,get_list_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Patient,Employee,Timing,OPDRegistration,Doctor,MedicalDiagnosis,Feedback,MedicineDistribution
+from .models import Patient,Employee,Timing,OPDRegistration,Doctor,MedicalDiagnosis,Feedback,MedicineDistribution,Medicine,MedicineStock
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import date
 from django.core.mail import send_mail
@@ -132,13 +132,17 @@ def distributemed(request):
     dgs = get_object_or_404(MedicalDiagnosis,pk=dgsid)
     meds = request.POST.getlist('meds')
     qty = request.POST.getlist('qty')
-    dgs.med_given=True
-    dgs.save()
     i=0
     while i<len(meds):
-        medd = MedicineDistribution(diagnosis=dgs,medicine_name=meds[i],quantity=qty[i])
+        try:
+            medicine_obj = Medicine.objects.get(name=meds[i])
+        except:
+            return render(request,'healthcenter/distribute.html',{'dgsid':dgsid,'dgs':dgs})
+        medd = MedicineDistribution(diagnosis=dgs,medicine=medicine_obj,quantity=qty[i])
         medd.save()
         i+=1
+    dgs.med_given=True
+    dgs.save()
     return HttpResponseRedirect('/hc/dashboard')
 
 def verifyOTP(request):

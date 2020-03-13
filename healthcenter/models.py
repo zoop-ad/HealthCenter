@@ -69,6 +69,9 @@ class Medicine(models.Model):
     name = models.CharField(max_length=100)
     authorized = models.BooleanField(default=True)
     shortage_quantity = models.IntegerField()
+
+    def __str__(self):
+        return self.name
     
 class MedicineDistribution(models.Model):
     diagnosis = models.ForeignKey(MedicalDiagnosis,on_delete=models.CASCADE)
