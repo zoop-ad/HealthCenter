@@ -31,7 +31,7 @@ class Patient(models.Model):
     cardNo = models.CharField(max_length=20,primary_key=True)
     name = models.CharField(max_length=100)
     dob = models.DateField()
-    contact_no = models.BigIntegerField()
+    contact_no = models.CharField(max_length=200)
     address = models.CharField(max_length=500)
     validity = models.DateField()
     sex = models.CharField(max_length=1)
