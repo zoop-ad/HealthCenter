@@ -75,8 +75,6 @@ class MedicineDistribution(models.Model):
     medicine = models.ForeignKey(Medicine,on_delete=models.CASCADE)
     quantity = models.IntegerField()
 
-
-
 class MedicineStock(models.Model):
     medicine = models.ForeignKey(Medicine,on_delete=models.CASCADE)
     current_stock = models.IntegerField()

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Doctor,Patient,Employee,Timing,OPDRegistration,Feedback,MedicalDiagnosis,MedicineDistribution
+from .models import Doctor,Patient,Employee,Timing,OPDRegistration,Feedback,MedicalDiagnosis,MedicineDistribution,Medicine, MedicinePurchase,MedicineStock
 # Register your models here.
 admin.site.site_title = "MNNIT Health Center Admin"
 admin.site.site_header = "MNNIT Health Center Admin"
@@ -57,6 +57,16 @@ class OPDRegistrationAdmin(admin.ModelAdmin):
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('name','email','rating')
 
+class MedicineAdmin(admin.ModelAdmin):
+    list_display = ('id' , 'name','shortage_quantity')
+
+class MedicineStockAdmin(admin.ModelAdmin):
+    list_display = ('id','med_name','current_stock','expiry_date')
+
+    def med_name(self,obj):
+        if obj.medicine:
+            return obj.medicine.name
+
 admin.site.register(Employee,EmployeeAdmin)
 admin.site.register(Patient,PatientAdmin)
 admin.site.register(Timing,TimingAdmin)
@@ -65,4 +75,6 @@ admin.site.register(OPDRegistration,OPDRegistrationAdmin)
 admin.site.register(Feedback,FeedbackAdmin)
 admin.site.register(MedicalDiagnosis,MedicalDiagnosisAdmin)
 admin.site.register(MedicineDistribution)
-
+admin.site.register(Medicine,MedicineAdmin)
+admin.site.register(MedicinePurchase)
+admin.site.register(MedicineStock)
