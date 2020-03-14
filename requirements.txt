@@ -10,7 +10,7 @@ certifi==2018.8.24
 chardet==3.0.4
 clint==0.5.1
 cryptography==2.6.1
-Django==2.2.6
+Django==2.2.10
 django-dotenv==1.4.2
 django-heroku==0.3.1
 django-sendgrid-v5==0.8.0
