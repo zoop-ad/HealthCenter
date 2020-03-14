@@ -106,4 +106,16 @@ class MedicinePurchase(models.Model):
     amount = models.DecimalField(max_digits=1000,decimal_places=10)
     mf_date = models.DateField()
     expiry_date = models.DateField()
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(default=now)
+
+class PathologyTest(models.Model):
+    test_name = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return str(self.id) + ' - ' +self.name   
+
+class PathologyTestReports(models.Model):
+    diagnosis = models.ForeignKey(MedicalDiagnosis,on_delete=models.CASCADE) 
+    test = models.ForeignKey(PathologyTest,on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=now)
+    result = models.CharField(max_length=1000)
