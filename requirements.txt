@@ -25,6 +25,6 @@ python-xlib==0.23
 requests==2.21.0
 sendgrid==6.1.0
 sqlparse==0.3.0
-urllib3==1.24.1
+urllib3==1.24.2
 virtualenv==16.7.6
 wget==3.2
