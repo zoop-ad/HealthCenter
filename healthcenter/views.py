@@ -8,7 +8,6 @@ from random import randint
 import datetime
 import io
 from django.http import FileResponse
-from reportlab.pdfgen import canvas
 from .render import Render
 from django.views.generic import View
 from django.template.loader import render_to_string
