@@ -36,6 +36,7 @@ class Patient(models.Model):
     validity = models.DateField()
     sex = models.CharField(max_length=10)
     blood_grp = models.CharField(max_length=5)
+    emailid = models.EmailField(default = 'amulya.mnnit@gmail.com')
 
     def __str__(self):
         return self.cardNo + ' - ' + self.name
@@ -48,7 +49,7 @@ class OPDRegistration(models.Model):
     checkup_time = models.TimeField(default=now)
 
     def __str__(self):
-        return self.id + '- ' + self.patient.name + ' with Dr. '+ self.doctor.emp.first_name
+        return str(self.id) + '- ' + str(self.patient.name) + ' with Dr. '+ str(self.doctor.emp.first_name)
 
 class MedicalDiagnosis(models.Model):
     patient = models.ForeignKey(Patient,on_delete=models.CASCADE)

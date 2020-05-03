@@ -6,6 +6,14 @@ from datetime import date
 from django.core.mail import send_mail
 from random import randint
 import datetime
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from .render import Render
+from django.views.generic import View
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
 # Create your views here.
 
 def index(request):
@@ -156,7 +164,10 @@ def distributemed(request):
         i+=1
     dgs.med_given=True
     dgs.save()
-    return HttpResponseRedirect('/hc/dashboard')
+    mq =zip(meds,qty)
+    html_message = render_to_string('healthcenter/receipt.html',{'dgs':dgs,'pat':dgs.patient,'mq':mq})
+    send_mail("MNNIT Health Center OPD Receipt","",'amulya@mnnit.ac.in',[str(dgs.patient.emailid)],fail_silently=False,html_message=html_message)
+    return render(request,'healthcenter/front.html',{'msg':'Medicine Distributed successfully!'})
 
 def verifyOTP(request):
     fbid = request.GET['fbid']
@@ -170,4 +181,8 @@ def verifyOTP(request):
         return render(request,'healthcenter/verify.html',{'em':fb.email,'fbid':fb.id,'fl':2})
 
 def ffront(request):
-    return render(request,'healthcenter/front.html')     
+    return render(request,'healthcenter/front.html')  
+
+def trymail(request):
+    html_message = render_to_string('healthcenter/receipt.html')
+    send_mail("hi","hello",'amulya@mnnit.ac.in',['amulya.mnnit@gmail.com'],fail_silently=False,html_message=html_message)

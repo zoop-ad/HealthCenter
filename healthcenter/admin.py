@@ -8,7 +8,7 @@ admin.site.site_url = "/hc"
 
 
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ('cardNo','name','contact_no','sex')
+    list_display = ('cardNo','name','contact_no','sex','emailid')
 
 class TimingAdmin(admin.ModelAdmin):
     list_display = ('doc_name','day','in_time','out_time') 

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+    <head>
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<style>
+
+.invoice-title h2, .invoice-title h3 {
+    display: inline-block;
+}
+
+.table > tbody > tr > .no-line {
+    border-top: none;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none;
+}
+
+.table > tbody > tr > .thick-line {
+    border-top: 2px solid;
+}
+</style>
+</head>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+    		<div class="invoice-title">
+    			<h2>OPD </h2><h3 class="pull-right">Diagnosis # {{dgs.id}}</h3>
+    		</div>
+    		<hr>
+    		<div class="row">
+    			<div class="col-xs-6">
+    				<address>
+    				<strong>Patient:</strong><br>
+    					{{pat.name}}<br>
+    					{{pat.address}}<br>
+    					{{pat.contact_no}}<br>
+    					{{pat.emailid}}
+    				</address>
+    			</div>
+    			<div class="col-xs-6 text-right">
+    				<address>
+        			<strong>Doctor:</strong><br>
+    					{{dgs.opd.doctor.emp.first_name}}{{dgs.opd.doctor.emp.last_name}}<br>
+    					{{dgs.opd.doctor.specialization}}<br>
+    					Apt. 4B<br>
+    					Springfield, ST 54321
+    				</address>
+                </div>
+                <div class="col-xs-6 text-right">
+    				<address>
+        			<strong>Blood Pressure</strong><br>
+    					{{dgs.bp}}
+    				</address>
+                </div>
+                <div class="col-xs-6 text-right">
+    				<address>
+        			<strong>Weight</strong><br>
+    					{{dgs.weight}}
+    				</address>
+                </div>
+                <div class="col-xs-6 text-right">
+    				<address>
+        			<strong>Temperature</strong><br>
+    					{{dgs.temp}}
+    				</address>
+                </div>
+                <div class="col-xs-6 text-right">
+    				<address>
+        			<strong>Diagnosis</strong><br>
+    					{{dgs.diagnosis}}
+    				</address>
+                </div>
+                <div class="col-xs-6 text-right">
+    				<address>
+        			<strong>Advice</strong><br>
+    					{{dgs.advice}}
+    				</address>
+                </div>
+                <div class="col-xs-6 text-right">
+    				<address>
+        			<strong>Pathology</strong><br>
+    					{{dgs.pathology}}
+    				</address>
+    			</div>
+    		</div>
+    		<div class="row">
+    			
+    			<div class="col-xs-6 text-right">
+    				<address>
+    					<strong> Date:</strong><br>
+    					{{dgs.timestamp}}<br><br>
+    				</address>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+    				<h3 class="panel-title"><strong>Medicine Summary</strong></h3>
+    			</div>
+    			<div class="panel-body">
+    				<div class="table-responsive">
+    					<table class="table table-condensed">
+    						<thead>
+                                <tr>
+        							<td><strong>S.No</strong></td>
+        							<td class="text-center"><strong>Medicine</strong></td>
+        							<td class="text-center"><strong>Quantity</strong></td>
+                                </tr>
+    						</thead>
+    						<tbody>
+    							{% for h,x in mq%}
+    							<tr>
+    								<td>{{ forloop.counter }}</td>
+    								<td class="text-center">{{h}}</td>
+    								<td class="text-center">{{x}}</td>
+    								
+    							</tr>
+                                {% endfor %}
+    						</tbody>
+    					</table>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+</html>

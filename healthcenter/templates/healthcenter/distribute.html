@@ -30,7 +30,8 @@
                 <div class="row">
                     <div class="control-group" id="fields">
                         <div class="controls"> 
-                            <form role="form" autocomplete="off" action="/hc/distributemed?dgsid={{dgsid}}" method="POST">{% csrf_token %}
+                            <form role="form" autocomplete="off" action="/hc/distributemed?dgsid={{dgsid}}" method="POST">
+                                {% csrf_token %}
                                 <div class="entry input-group col-xs-3">
                                     <input class="form-control" name="meds" type="text" placeholder="Medicine Name" />
                                     <input class="form-control" name="qty" type="number" placeholder="Quantity" />
