@@ -73,9 +73,9 @@
           <label for="username">DOB (DD-MM-YYYY)</label>
           <div class="input-group">
             
-            <input type="date" class="form-control" id="username" placeholder="" name="dob" required>
+            <input type="date" class="form-control" id="dateOfBirth" placeholder="" name="dob" required>
             <div class="invalid-feedback" style="width: 100%;">
-              Your username is required.
+              Your date of birth is required.
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@
 
         <div class="mb-3">
           <label for="address2">Card Validity (DD-MM-YYYY)</label>
-          <input type="date" class="form-control" id="address2" placeholder="" name="validity">
+          <input type="date" class="form-control" id="cardValid" placeholder="" name="validity">
         </div>
 
         <div class="row">
@@ -146,6 +146,22 @@
 <br>
 
 </div>
+<script type="text/javascript">
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("dateOfBirth").setAttribute("max", today);
+document.getElementById("cardValid").setAttribute("min", today);
+</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
       <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script>
         <script src="{% static 'healthcenter/form-validation.js' %}"></script></body>
