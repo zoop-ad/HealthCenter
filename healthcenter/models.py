@@ -36,7 +36,8 @@ class Patient(models.Model):
     validity = models.DateField()
     sex = models.CharField(max_length=10)
     blood_grp = models.CharField(max_length=5)
-    emailid = models.EmailField(default = 'amulya.mnnit@gmail.com')
+    emailid = models.EmailField()
+    password = models.CharField(max_length=1000)
 
     def __str__(self):
         return self.cardNo + ' - ' + self.name

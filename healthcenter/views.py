@@ -38,7 +38,7 @@ def patient_registration(request):
     return render(request,'healthcenter/patientreg.html')
 
 def register_patient(request):
-    np = Patient(cardNo=request.POST['cardno'],name=request.POST['fname'],dob=request.POST['dob'],contact_no=request.POST['cno'],address=request.POST['addr'],validity=request.POST['validity'],sex=request.POST['sex'],blood_grp=request.POST['bg'],emailid=request.POST['eml'])
+    np = Patient(cardNo=request.POST['cardno'],name=request.POST['fname'],dob=request.POST['dob'],contact_no=request.POST['cno'],address=request.POST['addr'],validity=request.POST['validity'],sex=request.POST['sex'],blood_grp=request.POST['bg'],emailid=request.POST['eml'],password=request.POST['eml'])
     np.save()
     return render(request,'healthcenter/front.html',{'msg':'Patient ' +request.POST['cardno']+' is successfully registered.'})
 
@@ -135,9 +135,7 @@ def submitfeedback(request):
     return render(request,'healthcenter/verify.html',{'em':fb.email,'fbid':fb.id,'fl':1})
 
 def gethistory(request):
-    print(request.GET)
     cno = request.GET['cno']
-    print(cno)
     pat = get_object_or_404(Patient,pk=cno)
     history = MedicalDiagnosis.objects.filter(patient=pat)
     return render(request,'healthcenter/history.html',{'history':history,'pat':pat})
@@ -179,3 +177,16 @@ def verifyOTP(request):
         return render(request,'healthcenter/thanks.html')
     else:
         return render(request,'healthcenter/verify.html',{'em':fb.email,'fbid':fb.id,'fl':2})
+
+def checkhis(request):
+    cno = request.POST['cno']
+    password = request.POST['password']
+    pat = get_object_or_404(Patient,pk=cno)
+    if password == pat.password:
+        history = MedicalDiagnosis.objects.filter(patient=pat)
+        return render(request,'healthcenter/history.html',{'history':history,'pat':pat})
+    else:
+        return render(request,'healthcenter/patlogin.html',{'msg':'Incorrect username or password.'})
+
+def checkhist(request):
+    return render(request,'healthcenter/patlogin.html')

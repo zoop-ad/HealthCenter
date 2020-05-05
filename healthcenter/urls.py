@@ -20,6 +20,8 @@ urlpatterns = [
     path('gethistory',views.gethistory),
     path('distribute',views.distribute),
     path('distributemed',views.distributemed),
-    path('verifyotp',views.verifyOTP)
+    path('verifyotp',views.verifyOTP),
+    path('checkhis',views.checkhist),
+    path('viewhis',views.checkhis)
 ]
 
