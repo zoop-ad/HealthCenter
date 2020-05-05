@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404,get_list_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Patient,Employee,Timing,OPDRegistration,Doctor,MedicalDiagnosis,Feedback,MedicineDistribution,Medicine,MedicineStock
+from .models import Patient,Employee,Timing,OPDRegistration,Doctor,MedicalDiagnosis,Feedback,MedicineDistribution,Medicine,MedicineStock,NewsArticle
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import date
 from django.core.mail import send_mail
@@ -15,7 +15,9 @@ from django.utils.html import strip_tags
 # Create your views here.
 
 def index(request):
-    return render(request, 'healthcenter/front.html')
+    art = NewsArticle.objects.all()
+    print(art)
+    return render(request, 'healthcenter/front.html',{'art':art})
 
 @login_required(login_url='/accounts/login/')
 def dashboard(request):
@@ -177,10 +179,3 @@ def verifyOTP(request):
         return render(request,'healthcenter/thanks.html')
     else:
         return render(request,'healthcenter/verify.html',{'em':fb.email,'fbid':fb.id,'fl':2})
-
-def ffront(request):
-    return render(request,'healthcenter/front.html')  
-
-def trymail(request):
-    html_message = render_to_string('healthcenter/receipt.html')
-    send_mail("hi","hello",'amulya@mnnit.ac.in',['amulya.mnnit@gmail.com'],fail_silently=False,html_message=html_message)

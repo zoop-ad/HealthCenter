@@ -120,3 +120,7 @@ class PathologyTestReports(models.Model):
     test = models.ForeignKey(PathologyTest,on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=now)
     result = models.CharField(max_length=1000)
+
+class NewsArticle(models.Model):
+    headline = models.CharField(max_length=1000)
+    link = models.CharField(max_length=1000)

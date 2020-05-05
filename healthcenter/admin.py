@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Doctor,Patient,Employee,Timing,OPDRegistration,Feedback,MedicalDiagnosis,MedicineDistribution,Medicine, MedicinePurchase,MedicineStock
+from .models import Doctor,Patient,Employee,Timing,OPDRegistration,Feedback,MedicalDiagnosis,MedicineDistribution,Medicine, MedicinePurchase,MedicineStock,NewsArticle
 # Register your models here.
 admin.site.site_title = "MNNIT Health Center Admin"
 admin.site.site_header = "MNNIT Health Center Admin"
@@ -77,4 +77,5 @@ admin.site.register(MedicalDiagnosis,MedicalDiagnosisAdmin)
 admin.site.register(MedicineDistribution)
 admin.site.register(Medicine,MedicineAdmin)
 admin.site.register(MedicinePurchase)
+admin.site.register(NewsArticle)
 admin.site.register(MedicineStock,MedicineStockAdmin)
