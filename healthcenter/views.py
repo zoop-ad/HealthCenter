@@ -190,3 +190,24 @@ def checkhis(request):
 
 def checkhist(request):
     return render(request,'healthcenter/patlogin.html')
+
+def showgraph(request):
+    return render(request,'healthcenter/graph.html')
+
+def viewgraph(request):
+    sd = request.POST["sd"].split('/')
+    ed = request.POST["ed"].split('/')
+    sdate = str(sd[2]) + '-'+str(sd[1])+ '-' +str(sd[0])
+    edate = str(ed[2]) + '-'+str(ed[1])+ '-' +str(ed[0])
+    opds = OPDRegistration.objects.filter(appoint_date__range=[sdate,edate])
+    print(opds)
+    mapp = {}
+    for i in opds:
+        docname = 'Dr. '+i.doctor.emp.first_name + ' '+ i.doctor.emp.last_name  
+        if docname in mapp.keys():
+            xx = mapp[docname]
+            xx+=1
+            mapp[docname] =xx
+        else:
+            mapp[docname]=1
+    return render(request,'healthcenter/dgraph.html',{'docs':list(mapp.keys()),'count':list(mapp.values())})
