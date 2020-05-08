@@ -11,6 +11,7 @@ from django.http import FileResponse
 from django.views.generic import View
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
 
@@ -191,9 +192,11 @@ def checkhis(request):
 def checkhist(request):
     return render(request,'healthcenter/patlogin.html')
 
+@staff_member_required
 def showgraph(request):
     return render(request,'healthcenter/graph.html')
 
+@staff_member_required
 def viewgraph(request):
     sd = request.POST["sd"].split('/')
     ed = request.POST["ed"].split('/')
