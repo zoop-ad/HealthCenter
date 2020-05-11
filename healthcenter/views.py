@@ -113,7 +113,9 @@ def diagnosepatient(request):
     opd = get_object_or_404(OPDRegistration,pk=opdid)
     pat = get_object_or_404(Patient,pk=opd.patient.cardNo)
     adv = request.POST['adv']
-    bp =  request.POST['bp']
+    systo =  request.POST['systo']
+    diasto =  request.POST['diasto']
+    bp = systo + '/' + diasto
     weight = request.POST['wt']
     temp = request.POST['temp']
     dia = request.POST['dg']

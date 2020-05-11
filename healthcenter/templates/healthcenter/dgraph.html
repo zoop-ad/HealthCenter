@@ -53,7 +53,8 @@
             var specs = "{{specs}}";
             var speccount = [0,0,0];
             var speclabels = ["Ayurvedic","Homeopathy","Allopathy"];
-            // console.log(specs);
+            console.log(specs);
+            console.log(docs);
             specs=specs.split(',');
             specs[0]=specs[0].substr(1);
             specs[specs.length-1]=specs[specs.length-1].substr(0,specs[specs.length-1].length-1);
@@ -65,8 +66,8 @@
                 specs[i] = specs[i].substr(6,specs[i].length-11)
             }
             console.log(specs);
-            docs = docs.split(',')
-            counts = counts.split(',')
+            docs = docs.split(',');
+            counts = counts.split(',');
             counts[0] = counts[0].substr(1);
             counts[counts.length-1] =counts[counts.length-1].substr(0,counts[counts.length-1].length -1); 
             for(var i=0;i<counts.length;i++)
@@ -80,15 +81,7 @@
                 else
                 docs[i] = docs[i].substr(6,docs[i].length-11)
             }
-            docs[0] = docs[0].substr(1);
-            docs[docs.length-1] = docs[docs.length-1].substr(0,docs[docs.length-1].length -1);
-            for(var i=0;i<docs.length;i++)
-            {
-                if(i==0)
-                docs[i] = docs[i].substr(5,docs[i].length-10)
-                else
-                docs[i] = docs[i].substr(6,docs[i].length-11)
-            }
+            console.log(docs);
             for(var i=0;i<specs.length;i++)
             {
               if(specs[i]=="Ayurvedic")
@@ -131,25 +124,24 @@ var piedata = [{
   type: 'pie',
   hole: .5,
   hoverinfo: 'label+percent',
-  name: 'Dept. Info',
   text: 'Dep',
-  textposition: 'inside'
+  // textposition: 'inside'
 }];
 
-var layout = {
-  annotations: [
-    {
-      font: {
-        size: 20
-      },
-      showarrow: false,
-      text: 'GHG',
-      x: 0.5,
-      // y: 0.5
-    }]
-};
+// var layout = {
+//   annotations: [
+//     {
+//       font: {
+//         size: 20
+//       },
+//       showarrow: false,
+//       text: 'GHG',
+//       x: 0.5,
+//       // y: 0.5
+//     }]
+// };
 
-Plotly.newPlot('specpie',piedata,layout);
+Plotly.newPlot('specpie',piedata);
         </script>
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
