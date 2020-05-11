@@ -35,19 +35,22 @@
             </div>
             <h4 class="display-4 font-weight-bold">Line chart of patient inflow</h4>
             <div id="tester"></div>
+            <br>
             <h4 class="display-4 font-weight-bold">Bar chart of patient inflow</h4>
             <div id="barr"></div>
+            <br>
             <h4 class="display-4 font-weight-bold">Pie chart of patient inflow</h4>
             <div id="piee"></div>
+            <br>
             <h4 class="display-4 font-weight-bold">Pie chart of patient in different domains</h4>
             <div id="specpie"></div>
+            <br>
         <script>
             var docs = "{{docs}}";
             var counts = '{{count}}';
             var specs = "{{specs}}";
             var speccount = [0,0,0];
             var speclabels = ["Ayurvedic","Homeopathy","Allopathy"];
-            // console.log(specs);
             specs=specs.split(',');
             specs[0]=specs[0].substr(1);
             specs[specs.length-1]=specs[specs.length-1].substr(0,specs[specs.length-1].length-1);
@@ -58,22 +61,12 @@
                 else
                 specs[i] = specs[i].substr(6,specs[i].length-11)
             }
-            console.log(specs);
             docs = docs.split(',')
             counts = counts.split(',')
             counts[0] = counts[0].substr(1);
             counts[counts.length-1] =counts[counts.length-1].substr(0,counts[counts.length-1].length -1); 
             for(var i=0;i<counts.length;i++)
             counts[i]= Number(counts[i])
-            docs[0] = docs[0].substr(1);
-            docs[docs.length-1] = docs[docs.length-1].substr(0,docs[docs.length-1].length -1);
-            for(var i=0;i<docs.length;i++)
-            {
-                if(i==0)
-                docs[i] = docs[i].substr(5,docs[i].length-10)
-                else
-                docs[i] = docs[i].substr(6,docs[i].length-11)
-            }
             docs[0] = docs[0].substr(1);
             docs[docs.length-1] = docs[docs.length-1].substr(0,docs[docs.length-1].length -1);
             for(var i=0;i<docs.length;i++)
@@ -92,8 +85,6 @@
               else
                 speccount[2]++;
             }
-            console.log(speccount);
-            // console.log(counts);
             TESTER = document.getElementById('tester');
             Plotly.newPlot( TESTER, [{
             x: docs,
