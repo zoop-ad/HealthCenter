@@ -39,16 +39,36 @@
                     </p>
                 </header>
             </div>
+            <h4 class="display-4 font-weight-bold">Line chart of patient inflow</h4>
             <div id="tester"></div>
-        <div id="barr"></div>
-        <div id="piee"></div>
+            <h4 class="display-4 font-weight-bold">Bar chart of patient inflow</h4>
+            <div id="barr"></div>
+            <h4 class="display-4 font-weight-bold">Pie chart of patient inflow</h4>
+            <div id="piee"></div>
+            <h4 class="display-4 font-weight-bold">Pie chart of patient in different domains</h4>
+            <div id="specpie"></div>
         <script>
             var docs = "{{docs}}";
             var counts = '{{count}}';
+            var specs = "{{specs}}";
+            var speccount = [0,0,0];
+            var speclabels = ["Ayurvedic","Homeopathy","Allopathy"];
+            // console.log(specs);
+            specs=specs.split(',');
+            specs[0]=specs[0].substr(1);
+            specs[specs.length-1]=specs[specs.length-1].substr(0,specs[specs.length-1].length-1);
+            for(var i=0;i<specs.length;i++)
+            {
+                if(i==0)
+                specs[i] = specs[i].substr(5,specs[i].length-10)
+                else
+                specs[i] = specs[i].substr(6,specs[i].length-11)
+            }
+            console.log(specs);
             docs = docs.split(',')
             counts = counts.split(',')
             counts[0] = counts[0].substr(1);
-            counts[counts.length-1] =counts[counts.length-1].substr(0,counts[counts.length-1].length -1) 
+            counts[counts.length-1] =counts[counts.length-1].substr(0,counts[counts.length-1].length -1); 
             for(var i=0;i<counts.length;i++)
             counts[i]= Number(counts[i])
             docs[0] = docs[0].substr(1);
@@ -60,6 +80,26 @@
                 else
                 docs[i] = docs[i].substr(6,docs[i].length-11)
             }
+            docs[0] = docs[0].substr(1);
+            docs[docs.length-1] = docs[docs.length-1].substr(0,docs[docs.length-1].length -1);
+            for(var i=0;i<docs.length;i++)
+            {
+                if(i==0)
+                docs[i] = docs[i].substr(5,docs[i].length-10)
+                else
+                docs[i] = docs[i].substr(6,docs[i].length-11)
+            }
+            for(var i=0;i<specs.length;i++)
+            {
+              if(specs[i]=="Ayurvedic")
+                speccount[0]++;
+              else if(specs[i]=="Homeopathic")
+                speccount[1]++;
+              else
+                speccount[2]++;
+            }
+            console.log(speccount);
+            // console.log(counts);
             TESTER = document.getElementById('tester');
             Plotly.newPlot( TESTER, [{
             x: docs,
@@ -82,7 +122,34 @@ var pdata = [{
   type: 'pie'
 }];
 
+
 Plotly.newPlot('piee', pdata);
+
+var piedata = [{
+  values: speccount,
+  labels: speclabels,
+  type: 'pie',
+  hole: .5,
+  hoverinfo: 'label+percent',
+  name: 'Dept. Info',
+  text: 'Dep',
+  textposition: 'inside'
+}];
+
+var layout = {
+  annotations: [
+    {
+      font: {
+        size: 20
+      },
+      showarrow: false,
+      text: 'GHG',
+      x: 0.5,
+      // y: 0.5
+    }]
+};
+
+Plotly.newPlot('specpie',piedata,layout);
         </script>
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
