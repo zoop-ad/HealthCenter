@@ -205,6 +205,7 @@ def viewgraph(request):
     opds = OPDRegistration.objects.filter(appoint_date__range=[sdate,edate])
     print(opds)
     mapp = {}
+    mapspec= {}
     for i in opds:
         docname = 'Dr. '+i.doctor.emp.first_name + ' '+ i.doctor.emp.last_name  
         if docname in mapp.keys():
@@ -213,4 +214,12 @@ def viewgraph(request):
             mapp[docname] =xx
         else:
             mapp[docname]=1
-    return render(request,'healthcenter/dgraph.html',{'docs':list(mapp.keys()),'count':list(mapp.values())})
+    for j in opds:
+        docspec = j.doctor.specialization
+        if docspec in mapspec.keys():
+            xx = mapspec[docspec]
+            xx+=1
+            mapspec[docspec] =xx
+        else:
+            mapspec[docspec]=1
+    return render(request,'healthcenter/dgraph.html',{'docs':list(mapp.keys()),'count':list(mapp.values()),'specs':list(mapspec.keys())})
