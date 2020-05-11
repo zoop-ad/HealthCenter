@@ -26,7 +26,7 @@ SENDGRID_SANDBOX_MODE_IN_DEBUG=False
 SECRET_KEY = '9yys*wo7$v8)+i=_#kp(+y$$9#sz89p&#9qsx3rywq^x)g0p&l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['172.29.34.139','localhost','192.168.43.182','radiant-hamlet-14644..herokuapp.com','127.0.0.1']
 
