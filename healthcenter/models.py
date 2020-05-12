@@ -57,7 +57,7 @@ class MedicalDiagnosis(models.Model):
     opd = models.ForeignKey(OPDRegistration,on_delete=models.CASCADE)
     advice = models.CharField(max_length=1000)
     timestamp = models.DateTimeField(default=now)
-    bp = models.IntegerField()
+    bp = models.CharField(max_length=1000)
     weight = models.IntegerField()
     temp = models.FloatField()
     diagnosis = models.CharField(max_length=1000)
