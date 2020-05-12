@@ -61,8 +61,8 @@
                 else
                 specs[i] = specs[i].substr(6,specs[i].length-11)
             }
-            docs = docs.split(',')
-            counts = counts.split(',')
+            docs = docs.split(',');
+            counts = counts.split(',');
             counts[0] = counts[0].substr(1);
             counts[counts.length-1] =counts[counts.length-1].substr(0,counts[counts.length-1].length -1); 
             for(var i=0;i<counts.length;i++)
@@ -116,25 +116,24 @@ var piedata = [{
   type: 'pie',
   hole: .5,
   hoverinfo: 'label+percent',
-  name: 'Dept. Info',
   text: 'Dep',
-  textposition: 'inside'
+  // textposition: 'inside'
 }];
 
-var layout = {
-  annotations: [
-    {
-      font: {
-        size: 20
-      },
-      showarrow: false,
-      text: 'GHG',
-      x: 0.5,
-      // y: 0.5
-    }]
-};
+// var layout = {
+//   annotations: [
+//     {
+//       font: {
+//         size: 20
+//       },
+//       showarrow: false,
+//       text: 'GHG',
+//       x: 0.5,
+//       // y: 0.5
+//     }]
+// };
 
-Plotly.newPlot('specpie',piedata,layout);
+Plotly.newPlot('specpie',piedata);
         </script>
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
