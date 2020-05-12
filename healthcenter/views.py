@@ -205,7 +205,6 @@ def viewgraph(request):
     sdate = str(sd[2]) + '-'+str(sd[1])+ '-' +str(sd[0])
     edate = str(ed[2]) + '-'+str(ed[1])+ '-' +str(ed[0])
     opds = OPDRegistration.objects.filter(appoint_date__range=[sdate,edate])
-    print(opds)
     mapp = {}
     mapspec= {}
     for i in opds:
