@@ -17,7 +17,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 def index(request):
     art = NewsArticle.objects.all()
-    print(art)
     return render(request, 'healthcenter/front.html',{'art':art})
 
 @login_required(login_url='/accounts/login/')
@@ -41,7 +40,8 @@ def patient_registration(request):
 def register_patient(request):
     np = Patient(cardNo=request.POST['cardno'],name=request.POST['fname'],dob=request.POST['dob'],contact_no=request.POST['cno'],address=request.POST['addr'],validity=request.POST['validity'],sex=request.POST['sex'],blood_grp=request.POST['bg'],emailid=request.POST['eml'],password=request.POST['eml'])
     np.save()
-    return render(request,'healthcenter/front.html',{'msg':'Patient ' +request.POST['cardno']+' is successfully registered.'})
+    art = NewsArticle.objects.all()
+    return render(request,'healthcenter/front.html',{'msg':'Patient ' +request.POST['cardno']+' is successfully registered.','art':art})
 
 def opdreg(request):
     doc_list = Doctor.objects.all()
@@ -67,7 +67,8 @@ def regopd(request):
     print(tim)
     reg = OPDRegistration(patient=pat,appoint_date=request.POST['dateofreg'],doctor=doc,checked=False)
     reg.save()
-    return render(request,'healthcenter/front.html',{'msg':'Successfully Registered for OPD on '+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name})
+    art = NewsArticle.objects.all()
+    return render(request,'healthcenter/front.html',{'art':art,'msg':'Successfully Registered for OPD on '+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name})
 
 def medavail(request):
     return render(request,'healthcenter/medavail.html')
@@ -168,7 +169,8 @@ def distributemed(request):
     mq =zip(meds,qty)
     html_message = render_to_string('healthcenter/receipt.html',{'dgs':dgs,'pat':dgs.patient,'mq':mq})
     send_mail("MNNIT Health Center OPD Receipt","",'amulya@mnnit.ac.in',[str(dgs.patient.emailid)],fail_silently=False,html_message=html_message)
-    return render(request,'healthcenter/front.html',{'msg':'Medicine Distributed successfully!'})
+    art = NewsArticle.objects.all()
+    return render(request,'healthcenter/front.html',{'art':art,'msg':'Medicine Distributed successfully!'})
 
 def verifyOTP(request):
     fbid = request.GET['fbid']
