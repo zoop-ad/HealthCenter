@@ -116,7 +116,7 @@ def diagnosepatient(request):
     adv = request.POST['adv']
     systo =  request.POST['systo']
     diasto =  request.POST['diasto']
-    bp = systo + '/' + diasto
+    bp = systo + ' ' + diasto
     weight = request.POST['wt']
     temp = request.POST['temp']
     dia = request.POST['dg']
