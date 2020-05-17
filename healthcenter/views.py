@@ -157,8 +157,12 @@ def distributemed(request):
     while i<len(meds):
         try:
             medicine_obj = Medicine.objects.get(name=meds[i])
+            medicine_stock_obj = MedicineStock.objects.get(medicine=medicine_obj)
         except:
             return render(request,'healthcenter/distribute.html',{'dgsid':dgsid,'dgs':dgs})
+        if medicine_stock_obj.current_stock>=int(qty[i]):
+            medicine_stock_obj.current_stock -= int(qty[i])
+        medicine_stock_obj.save()
         medd = MedicineDistribution(diagnosis=dgs,medicine=medicine_obj,quantity=qty[i])
         medd.save()
         i+=1
