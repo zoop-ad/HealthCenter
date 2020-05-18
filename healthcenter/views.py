@@ -208,6 +208,8 @@ def viewgraph(request):
     sdate = str(sd[2]) + '-'+str(sd[1])+ '-' +str(sd[0])
     edate = str(ed[2]) + '-'+str(ed[1])+ '-' +str(ed[0])
     opds = OPDRegistration.objects.filter(appoint_date__range=[sdate,edate])
+    presc = MedicalDiagnosis.objects.filter(opd__appoint_date__range=[sdate,edate])
+    meds = {}
     mapp = {}
     mapspec= {}
     for i in opds:
@@ -226,4 +228,12 @@ def viewgraph(request):
             mapspec[docspec] =xx
         else:
             mapspec[docspec]=1
-    return render(request,'healthcenter/dgraph.html',{'docs':list(mapp.keys()),'count':list(mapp.values()),'specs':list(mapspec.keys())})
+    for k in presc:
+        medicine = k.pres_given
+        if medicine in meds.keys():
+            xx = meds[medicine]
+            xx+=1
+            meds[medicine]=xx
+        else:
+            meds[medicine]=1 
+    return render(request,'healthcenter/dgraph.html',{'docs':list(mapp.keys()),'count':list(mapp.values()),'specs':list(mapspec.keys()),'meds':list(meds.keys()),'medscount':list(meds.values())})
