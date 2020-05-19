@@ -29,10 +29,14 @@ def dashboard(request):
         today = date.today()
         opds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today)
         return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds})
-    else:
+    elif request.user.groups.all()[0].name=="Pharmacist":
         pst = get_object_or_404(Employee,pk=str(request.user))
         dgs = MedicalDiagnosis.objects.filter(med_given=False)
         return render(request,'healthcenter/pharmacist-dashboard.html',{'msg':'Pharmacist '+pst.first_name + ' '+pst.last_name,'dgs':dgs})
+    else:
+        recp = get_object_or_404(Employee,pk=str(request.user))
+        opdss = OPDRegistration.objects.filter(checked=False)
+        return render(request,'healthcenter/recep-dash.html',{'msg':'Receptionist '+recp.first_name+' '+recp.last_name,'opds':opdss})
 
 def patient_registration(request):
     return render(request,'healthcenter/patientreg.html')
