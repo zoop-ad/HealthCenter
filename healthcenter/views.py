@@ -222,7 +222,7 @@ def viewgraph(request):
     sdate = str(sd[2]) + '-'+str(sd[1])+ '-' +str(sd[0])
     edate = str(ed[2]) + '-'+str(ed[1])+ '-' +str(ed[0])
     opds = OPDRegistration.objects.filter(appoint_date__range=[sdate,edate])
-    presc = MedicalDiagnosis.objects.filter(opd__appoint_date__range=[sdate,edate])
+    presc = MedicineDistribution.objects.filter(diagnosis__opd__appoint_date__range=[sdate,edate])
     meds = {}
     mapp = {}
     mapspec= {}
@@ -243,7 +243,7 @@ def viewgraph(request):
         else:
             mapspec[docspec]=1
     for k in presc:
-        medicine = k.pres_given
+        medicine = k.medicine.name
         if medicine in meds.keys():
             xx = meds[medicine]
             xx+=1
