@@ -5,8 +5,6 @@ admin.site.site_title = "MNNIT Health Center Admin"
 admin.site.site_header = "MNNIT Health Center Admin"
 admin.site.site_url = "/hc"
 
-
-
 class PatientAdmin(admin.ModelAdmin):
     list_display = ('cardNo','name','contact_no','sex','emailid')
 

@@ -27,8 +27,9 @@ def dashboard(request):
         empl = get_object_or_404(Employee,pk=str(request.user))
         doc = Doctor.objects.filter(emp=empl)[0]
         today = date.today()
-        opds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today)
-        return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds})
+        opds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today).filter(is_live=False)
+        lopds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today).filter(is_live=True)
+        return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds,'live_pat_list':lopds})
     elif request.user.groups.all()[0].name=="Pharmacist":
         pst = get_object_or_404(Employee,pk=str(request.user))
         dgs = MedicalDiagnosis.objects.filter(med_given=False)
@@ -69,7 +70,7 @@ def regopd(request):
         return render(request,'healthcenter/opdreg.html',{'docs':doc_list,'err':'Doctor not available on given date'})
     reg = OPDRegistration(patient=pat,appoint_date=request.POST['dateofreg'],doctor=doc,checked=False)
     reg.save()
-    return render(request,'healthcenter/front.html',{'msg':'Successfully Registered for OPD on '+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name})
+    return render(request,'healthcenter/front.html',{'msg':'Successfully Registered for OPD on '+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name + ' OPD ID = '+str(reg.id)})
 
 def medavail(request):
     return render(request,'healthcenter/medavail.html')
