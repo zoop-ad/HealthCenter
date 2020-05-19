@@ -12,7 +12,9 @@ from django.views.generic import View
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib.admin.views.decorators import staff_member_required
-
+from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
+from django.utils import timezone
 # Create your views here.
 
 def index(request):
@@ -73,7 +75,19 @@ def medavail(request):
 
 def docavail(request):
     doc_list = Doctor.objects.all()
-    return render(request,'healthcenter/docavail.html',{'docs':doc_list,'times':[]})
+    active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
+    user_id_list = []
+    for session in active_sessions:
+        data = session.get_decoded()
+        user_id_list.append(data.get('_auth_user_id', None))
+    # Query all logged in users based on id list
+    xx= User.objects.filter(id__in=user_id_list)
+    yy=[]
+    for x in xx:
+        if x.groups.filter(name='Doctor').exists():
+            yy.append(x)
+    print(yy)
+    return render(request,'healthcenter/docavail.html',{'docs':doc_list,'times':[],'yy':yy})
 
 def docavailcheck(request):
     drno = request.POST['docreq']
@@ -82,7 +96,7 @@ def docavailcheck(request):
     timings = Timing.objects.filter(dr=doc).filter(day=days)
     doc_list = Doctor.objects.all()
     nm = 'Dr. '+doc.emp.first_name + ' ' + doc.emp.last_name
-    return render(request,'healthcenter/docavail.html',{'times':timings,'docs':doc_list,'docname':nm})
+    return render(request,'healthcenter/docavail.html',{'times':timings,'docs':doc_list,'docname':nm,'yy':[]})
 
 def medavailcheck(request):
     med = request.POST['med']
