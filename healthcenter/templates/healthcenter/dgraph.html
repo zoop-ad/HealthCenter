@@ -36,9 +36,6 @@
             <h4 class="display-4 font-weight-bold">Line chart of patient inflow</h4>
             <div id="tester"></div>
             <br>
-            <h4 class="display-4 font-weight-bold">Bar chart of patient inflow</h4>
-            <div id="barr"></div>
-            <br>
             <h4 class="display-4 font-weight-bold">Pie chart of patient inflow</h4>
             <div id="piee"></div>
             <br>
@@ -114,15 +111,6 @@
             x: docs,
             y: counts}], {
             margin: { t: 0 } } );
-
-            var data = [
-  {
-    x: docs,
-    y: counts,
-    type: 'bar'
-  }
-];
-Plotly.newPlot('barr', data);
 
 
 var pdata = [{
