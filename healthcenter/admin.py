@@ -46,7 +46,7 @@ class MedicalDiagnosisAdmin(admin.ModelAdmin):
     checked.short_description='Checked'
 
 class OPDRegistrationAdmin(admin.ModelAdmin):
-    list_display = ('pat_name','appoint_date','checked')
+    list_display = ('id','pat_name','appoint_date','checked')
 
     def pat_name(self, obj):
         if obj.patient:

@@ -249,3 +249,9 @@ def viewgraph(request):
         else:
             meds[medicine]=1 
     return render(request,'healthcenter/dgraph.html',{'docs':list(mapp.keys()),'count':list(mapp.values()),'specs':list(mapspec.keys()),'meds':list(meds.keys()),'medscount':list(meds.values())})
+
+def makelive(request):
+    opdr = get_object_or_404(OPDRegistration,pk=request.GET['opdid'])
+    opdr.is_live=True
+    opdr.save()
+    return HttpResponseRedirect('/hc/dashboard')

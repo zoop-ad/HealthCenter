@@ -24,6 +24,7 @@ urlpatterns = [
     path('checkhis',views.checkhist),
     path('viewhis',views.checkhis),
     path('graph',views.showgraph),
-    path('viewgraph',views.viewgraph)
+    path('viewgraph',views.viewgraph),
+    path('makelive',views.makelive)
 ]
 
