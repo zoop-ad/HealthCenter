@@ -31,9 +31,7 @@ def dashboard(request):
         return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds})
     else:
         pst = get_object_or_404(Employee,pk=str(request.user))
-        print(pst)
         dgs = MedicalDiagnosis.objects.filter(med_given=False)
-        print(dgs)
         return render(request,'healthcenter/pharmacist-dashboard.html',{'msg':'Pharmacist '+pst.first_name + ' '+pst.last_name,'dgs':dgs})
 
 def patient_registration(request):
@@ -65,7 +63,6 @@ def regopd(request):
     except:
         doc_list = Doctor.objects.all()
         return render(request,'healthcenter/opdreg.html',{'docs':doc_list,'err':'Doctor not available on given date'})
-    print(tim)
     reg = OPDRegistration(patient=pat,appoint_date=request.POST['dateofreg'],doctor=doc,checked=False)
     reg.save()
     return render(request,'healthcenter/front.html',{'msg':'Successfully Registered for OPD on '+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name})
@@ -86,7 +83,6 @@ def docavail(request):
     for x in xx:
         if x.groups.filter(name='Doctor').exists():
             yy.append(x)
-    print(yy)
     return render(request,'healthcenter/docavail.html',{'docs':doc_list,'times':[],'yy':yy})
 
 def docavailcheck(request):
@@ -108,7 +104,6 @@ def medavailcheck(request):
         stck = get_list_or_404(MedicineStock,medicine = medicine_obj)
     except:
         return render(request,'healthcenter/medavail.html',{'msg':'Not Available','stck':[{'current_stock':0,'expiry_date':'NA'}],'medname':med})
-    print(stck)
     return render(request,'healthcenter/medavail.html',{'msg':'Available','stck':stck,'medname':med})
 
 def diagnose(request):
@@ -159,7 +154,6 @@ def gethistory(request):
 def distribute(request):
     dgsid = request.GET['dgsid']
     dgs = get_object_or_404(MedicalDiagnosis,pk=dgsid)
-    print(dgs)
     return render(request,'healthcenter/distribute.html',{'dgsid':dgsid,'dgs':dgs})
 
 def distributemed(request):
