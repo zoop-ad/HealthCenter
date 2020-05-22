@@ -1,0 +1,75 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Transfer Patient</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/checkout/">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+    <!-- Bootstrap core CSS -->
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'healthcenter/form-validation.css' %}" rel="stylesheet">
+
+
+  </head>
+  <body class="bg-light">
+    <div class="container">
+  <div class="py-5 text-center">
+    <img class="d-block mx-auto mb-4" src="{% static 'healthcenter/images/logo.png' %}" alt="" width="72" height="72">
+    <h2>Transfer Patient - {{pat.name}}</h2>
+
+  </div>
+
+  <div class="col-md-8 order-md-1">
+    <form class="needs-validation" method="POST" action="/hc/transferpatient?opdid={{opdid}}" novalidate>
+      {% csrf_token %}
+      <div class="row">
+              <div class="col-md-9 mb-3">
+                <label for="country">Choose Doctor</label>
+                <select class="custom-select d-block w-100" id="country" name="docreq" required>
+                    {% for dd in doclis %}
+            <option value='{{dd.id}}'>Dr. {{dd.emp.first_name}} {{dd.emp.last_name}} - {{dd.specialization}}</option>
+            {% endfor %}
+                </select>
+                <div class="invalid-feedback">
+                  Please select a doctor.
+                </div>
+              </div>
+              
+            </div><hr class="mb-4">
+
+      <button class="btn btn-primary btn-lg " type="submit">Submit</button>
+    </form>
+    </div>
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script>
+        <script src="{% static 'healthcenter/form-validation.js' %}"></script></body>
+</html>
