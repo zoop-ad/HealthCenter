@@ -129,51 +129,26 @@
         
       </div>
 
-      <h2>Live Registrations</h2><br>
+      
+      <h2>Pending OPD Registrations</h2><br>
       <div class="table-responsive">
           <table class="table table-striped table-sm">
             <thead>
               <tr>
-                <th>Serial No.</th>
+                <th>OPD ID</th>
                 <th>Name</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              {% for p in live_pat_list %}
+              {% for p in opds %}
               <tr>
-                <td>{{forloop.counter}}</td>
+                <td>{{p.id}}</td>
                 <td>{{p.patient.name}}</td>
-                {% if p.checked %}
-                <td>Diagnosis Complete</td>
+                {% if p.is_live %}
+                <td>Registration is Live</td>
                 {% else %}
-                <td><a href="/hc/diagnose?opdid={{p.id}}">Diagnose</a></td>
-                {% endif %}
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div><br>
-        <hr>
-      <h2>Pending Registrations</h2><br>
-      <div class="table-responsive">
-          <table class="table table-striped table-sm">
-            <thead>
-              <tr>
-                <th>Serial No.</th>
-                <th>Name</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for p in pat_list %}
-              <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{p.patient.name}}</td>
-                {% if p.checked %}
-                <td>Diagnosis Complete</td>
-                {% else %}
-                <td><a href="/hc/diagnose?opdid={{p.id}}">Diagnose</a></td>
+                <td><a href="/hc/makelive?opdid={{p.id}}">Make Live</a></td>
                 {% endif %}
               </tr>
               {% endfor %}

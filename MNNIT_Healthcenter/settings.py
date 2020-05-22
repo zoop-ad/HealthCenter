@@ -125,3 +125,5 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/hc/dashboard'
 
 django_heroku.settings(locals())
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

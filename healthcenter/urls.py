@@ -22,6 +22,10 @@ urlpatterns = [
     path('distributemed',views.distributemed),
     path('verifyotp',views.verifyOTP),
     path('checkhis',views.checkhist),
-    path('viewhis',views.checkhis)
+    path('viewhis',views.checkhis),
+    path('graph',views.showgraph),
+    path('viewgraph',views.viewgraph),
+    path('makelive',views.makelive),
+    path('fbsv',views.fbsv)
 ]
 

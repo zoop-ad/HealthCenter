@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+    <head>
+        <style>
+
+            /*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.datepicker td, .datepicker th {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.85rem;
+}
+
+.datepicker {
+    margin-bottom: 3rem;
+}
+
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+body {
+    min-height: 100vh;
+    background-color: #fafafa;
+}
+
+.input-group {
+    border-radius: 30rem;
+}
+
+input.form-control {
+    border-radius: 30rem 0 0 30rem;
+    border: none;
+}
+
+input.form-control:focus {
+    box-shadow: none;
+}
+
+input.form-control::placeholder {
+    font-style: italic;
+}
+
+.input-group-text {
+    border-radius: 0 30rem 30rem 0;
+    border: none;
+}
+
+.datepicker-dropdown {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+        </style>
+        <title>MNNIT Health Center Portal</title>
+        <!-- for-mobile-apps -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="Feedback Widget Responsive, Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<!-- //for-mobile-apps -->
+    </head>
+    <body>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">MNNIT Health Center Portal Statistics</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarsExample01">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="/hc/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-link">
+                  <a class="nav-link" href="/hc/fbsv">Feedback Statistics and Visualizations</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        <!-- For Demo Purpose -->
+<div class="container py-5">
+    <header class="text-center">
+        <h1 class="display-4 font-weight-bold">Doctor-Patient Statistics and Visualizations</h1>
+        
+        </p>
+    </header>
+</div>
+
+
+<div class="container">
+    <div class="row">
+       
+        <div class="col-md-6 mx-auto">
+            <div class="py-4 text-center"><i class="fa fa-calendar fa-5x"></i></div>
+            <form method="POST" action="/hc/viewgraph">{% csrf_token %}
+            <!-- Date Picker Input -->
+            <div class="form-group mb-4">
+                <div class="datepicker date input-group p-0 shadow-sm">
+                    <input type="text" placeholder="Choose a start date" class="form-control py-4 px-4" id="reservationDate" name="sd">
+                    <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-clock-o"></i></span></div>
+                </div>
+            </div><!-- DEnd ate Picker Input -->
+
+            <!-- Date Picker Input -->
+            <div class="form-group mb-4">
+                <div class="datepicker date input-group p-0 shadow-sm">
+                    <input type="text" placeholder="Choose an end date" class="form-control py-4 px-4" id="endDate" name="ed">
+                    <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-clock-o"></i></span></div>
+                </div>
+            </div><!-- DEnd ate Picker Input -->
+
+            <!-- For Demo Purpose -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-sm px-4 rounded-pill text-uppercase font-weight-bold shadow-sm">View Statistics</button></form>
+            </div>
+        </div>
+   
+    </div>
+</div>
+<script>
+    $(function () {
+
+// INITIALIZE DATEPICKER PLUGIN
+$('.datepicker').datepicker({
+clearBtn: true,
+format: "dd/mm/yyyy"
+});
+
+
+// FOR DEMO PURPOSE
+$('#reservationDate').on('change', function () {
+var pickedDate = $('input').val();
+$('#pickedDate').html(pickedDate);
+});
+});
+</script>
+        
+
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    </body>
+</html>

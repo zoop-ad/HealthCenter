@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+
+    <head>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <title>MNNIT Health Center Portal</title>
+        </head>
+
+        <body>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+            <nav class="navbar navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">MNNIT Health Center Portal Statistics</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarsExample01">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="/hc/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-link">
+                      <a class="nav-link" href="/hc/fbsv">Feedback Statistics and Visualizations</a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+
+              <div class="container py-5">
+                <header class="text-center">
+                    <h1 class="display-4 font-weight-bold">Doctor-Patient Statistics and Visualizations</h1>
+                    
+                    </p>
+                </header>
+            </div>
+            <h4 class="display-4 font-weight-bold">Line chart of patient inflow</h4>
+            <div id="tester"></div>
+            <br>
+            <h4 class="display-4 font-weight-bold">Pie chart of patient inflow</h4>
+            <div id="piee"></div>
+            <br>
+            <h4 class="display-4 font-weight-bold">Pie chart of patient in different domains</h4>
+            <div id="specpie"></div>
+            <br>
+            <h4 class="display-4 font-weight-bold">Distribution of medicines prescribed</h4>
+            <div id="medbar"></div>
+            <br>
+        <script>
+            var docs = "{{docs}}";
+            var counts = '{{count}}';
+            var specs = "{{specs}}";
+            var meds = "{{meds}}";
+            // console.log(meds);
+            var medcount = "{{medscount}}"
+            // console.log(medscount);
+            var speccount = [0,0,0];
+            var speclabels = ["Ayurvedic","Homeopathy","Allopathy"];
+            specs=specs.split(',');
+            specs[0]=specs[0].substr(1);
+            specs[specs.length-1]=specs[specs.length-1].substr(0,specs[specs.length-1].length-1);
+            for(var i=0;i<specs.length;i++)
+            {
+                if(i==0)
+                specs[i] = specs[i].substr(5,specs[i].length-10)
+                else
+                specs[i] = specs[i].substr(6,specs[i].length-11)
+            }
+            meds=meds.split(',');
+            meds[0]=meds[0].substr(1);
+            meds[meds.length-1]=meds[meds.length-1].substr(0,meds[meds.length-1].length-1);
+            for(var i=0;i<meds.length;i++)
+            {
+                if(i==0)
+                meds[i] = meds[i].substr(5,meds[i].length-10)
+                else
+                meds[i] = meds[i].substr(6,meds[i].length-11)
+            }
+            docs = docs.split(',');
+            counts = counts.split(',');
+            counts[0] = counts[0].substr(1);
+            counts[counts.length-1] =counts[counts.length-1].substr(0,counts[counts.length-1].length -1); 
+            for(var i=0;i<counts.length;i++)
+            counts[i]= Number(counts[i])
+            medcount = medcount.split(',');
+            medcount[0] = medcount[0].substr(1);
+            medcount[medcount.length-1] =medcount[medcount.length-1].substr(0,medcount[medcount.length-1].length -1); 
+            for(var i=0;i<medcount.length;i++)
+            medcount[i]= Number(medcount[i])
+            console.log(meds);
+            console.log(medcount);
+            docs[0] = docs[0].substr(1);
+            docs[docs.length-1] = docs[docs.length-1].substr(0,docs[docs.length-1].length -1);
+            for(var i=0;i<docs.length;i++)
+            {
+                if(i==0)
+                docs[i] = docs[i].substr(5,docs[i].length-10)
+                else
+                docs[i] = docs[i].substr(6,docs[i].length-11)
+            }
+            for(var i=0;i<specs.length;i++)
+            {
+              if(specs[i]=="Ayurvedic")
+                speccount[0]++;
+              else if(specs[i]=="Homeopathic")
+                speccount[1]++;
+              else
+                speccount[2]++;
+            }
+            TESTER = document.getElementById('tester');
+            Plotly.newPlot( TESTER, [{
+            x: docs,
+            y: counts}], {
+            margin: { t: 0 } } );
+
+
+var pdata = [{
+  values: counts,
+  labels: docs,
+  type: 'pie'
+}];
+
+
+Plotly.newPlot('piee', pdata);
+
+var piedata = [{
+  values: speccount,
+  labels: speclabels,
+  type: 'pie',
+  hole: .5,
+  hoverinfo: 'label+percent',
+  text: 'Dep',
+  // textposition: 'inside'
+}];
+
+// var layout = {
+//   annotations: [
+//     {
+//       font: {
+//         size: 20
+//       },
+//       showarrow: false,
+//       text: 'GHG',
+//       x: 0.5,
+//       // y: 0.5
+//     }]
+// };
+
+Plotly.newPlot('specpie',piedata);
+var meddata = [
+  {
+    x: meds,
+    y: medcount,
+    type: 'bar'
+  }
+];
+Plotly.newPlot('medbar', meddata);
+
+        </script>
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+         
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        </body>
+</html>

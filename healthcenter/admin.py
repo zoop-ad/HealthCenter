@@ -5,8 +5,6 @@ admin.site.site_title = "MNNIT Health Center Admin"
 admin.site.site_header = "MNNIT Health Center Admin"
 admin.site.site_url = "/hc"
 
-
-
 class PatientAdmin(admin.ModelAdmin):
     list_display = ('cardNo','name','contact_no','sex','emailid')
 
@@ -46,7 +44,7 @@ class MedicalDiagnosisAdmin(admin.ModelAdmin):
     checked.short_description='Checked'
 
 class OPDRegistrationAdmin(admin.ModelAdmin):
-    list_display = ('pat_name','appoint_date','checked')
+    list_display = ('id','pat_name','appoint_date','checked')
 
     def pat_name(self, obj):
         if obj.patient:

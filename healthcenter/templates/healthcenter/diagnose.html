@@ -74,24 +74,25 @@
         <div class="row">
                 <div class="col-md-6 mb-3">
                         <label for="firstName">Blood Pressure</label>
-                        <input type="text" class="form-control" name="bp" id="firstName" placeholder="" value="" required>
+                        <input type="text" class="form-control" name="systo" id="firstName" placeholder="Systolic" value="" min="90" max="250" required >
+                        <input type="text" class="form-control" name="diasto" id="firstName" placeholder="Diastolic" value="" min="60" max="140" required>
                         <div class="invalid-feedback">
                           Valid card number is required.
                         </div>  
                       </div>
                       <br><br>
           <div class="col-md-6 mb-3">
-            <label for="firstName">Temperature</label>
-            <input type="text" class="form-control" id="firstName" name="temp" placeholder="" value="" required>
+            <label for="firstName">Temperature(in deg. Fahrenheit)</label>
+            <input type="number" class="form-control" id="firstName" name="temp" placeholder="" value="" required max="110" min="92">
             <div class="invalid-feedback">
-              Valid Name is required.
+              Valid temperature required.
             </div>  
           </div>
           <div class="col-md-6 mb-3">
-                <label for="firstName">Weight</label>
-                <input type="text" class="form-control" id="firstName" name="wt" placeholder="" value="" required>
+                <label for="firstName">Weight(in kgs)</label>
+                <input type="number" class="form-control" id="firstName" name="wt" placeholder="" value="" required min="5" max="200">
                 <div class="invalid-feedback">
-                  Valid Name is required.
+                  Valid weight required.
                 </div>  
               </div>
           
@@ -101,7 +102,7 @@
           <label for="address">Diagnosis</label>
           <input type="text" class="form-control" id="address" placeholder="" name="dg" required>
           <div class="invalid-feedback">
-            Please enter your address.
+            Please enter the diagnosis.
           </div>
         </div>
         <div class="mb-3">
@@ -116,14 +117,14 @@
                     <label for="address">Advice</label>
                     <input type="text" class="form-control" id="address" placeholder="" name="adv" required>
                     <div class="invalid-feedback">
-                      Please enter your address.
+                      Please enter advice to patient.
                     </div>
                   </div>
                   <div class="mb-3">
                         <label for="address">Pathology</label>
                         <input type="text" class="form-control" id="address" placeholder="" name="path" required>
                         <div class="invalid-feedback">
-                          Please enter your address.
+                          Please enter pathology(if any).
                         </div>
                       </div>
         <hr class="mb-4">

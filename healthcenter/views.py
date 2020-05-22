@@ -11,12 +11,14 @@ from django.http import FileResponse
 from django.views.generic import View
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
+from django.utils import timezone
 # Create your views here.
 
 def index(request):
     art = NewsArticle.objects.all()
-    print(art)
     return render(request, 'healthcenter/front.html',{'art':art})
 
 @login_required(login_url='/accounts/login/')
@@ -25,14 +27,17 @@ def dashboard(request):
         empl = get_object_or_404(Employee,pk=str(request.user))
         doc = Doctor.objects.filter(emp=empl)[0]
         today = date.today()
-        opds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today)
-        return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds})
-    else:
+        opds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today).filter(is_live=False)
+        lopds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today).filter(is_live=True)
+        return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds,'live_pat_list':lopds})
+    elif request.user.groups.all()[0].name=="Pharmacist":
         pst = get_object_or_404(Employee,pk=str(request.user))
-        print(pst)
         dgs = MedicalDiagnosis.objects.filter(med_given=False)
-        print(dgs)
         return render(request,'healthcenter/pharmacist-dashboard.html',{'msg':'Pharmacist '+pst.first_name + ' '+pst.last_name,'dgs':dgs})
+    else:
+        recp = get_object_or_404(Employee,pk=str(request.user))
+        opdss = OPDRegistration.objects.filter(checked=False)
+        return render(request,'healthcenter/recep-dash.html',{'msg':'Receptionist '+recp.first_name+' '+recp.last_name,'opds':opdss})
 
 def patient_registration(request):
     return render(request,'healthcenter/patientreg.html')
@@ -63,17 +68,27 @@ def regopd(request):
     except:
         doc_list = Doctor.objects.all()
         return render(request,'healthcenter/opdreg.html',{'docs':doc_list,'err':'Doctor not available on given date'})
-    print(tim)
     reg = OPDRegistration(patient=pat,appoint_date=request.POST['dateofreg'],doctor=doc,checked=False)
     reg.save()
-    return render(request,'healthcenter/front.html',{'msg':'Successfully Registered for OPD on '+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name})
+    return render(request,'healthcenter/front.html',{'msg':'Successfully Registered for OPD on '+request.POST['dateofreg']+' with Dr. '+ doc.emp.first_name + ' '+doc.emp.last_name + ' OPD ID = '+str(reg.id)})
 
 def medavail(request):
     return render(request,'healthcenter/medavail.html')
 
 def docavail(request):
     doc_list = Doctor.objects.all()
-    return render(request,'healthcenter/docavail.html',{'docs':doc_list,'times':[]})
+    active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
+    user_id_list = []
+    for session in active_sessions:
+        data = session.get_decoded()
+        user_id_list.append(data.get('_auth_user_id', None))
+    # Query all logged in users based on id list
+    xx= User.objects.filter(id__in=user_id_list)
+    yy=[]
+    for x in xx:
+        if x.groups.filter(name='Doctor').exists():
+            yy.append(x)
+    return render(request,'healthcenter/docavail.html',{'docs':doc_list,'times':[],'yy':yy})
 
 def docavailcheck(request):
     drno = request.POST['docreq']
@@ -82,7 +97,7 @@ def docavailcheck(request):
     timings = Timing.objects.filter(dr=doc).filter(day=days)
     doc_list = Doctor.objects.all()
     nm = 'Dr. '+doc.emp.first_name + ' ' + doc.emp.last_name
-    return render(request,'healthcenter/docavail.html',{'times':timings,'docs':doc_list,'docname':nm})
+    return render(request,'healthcenter/docavail.html',{'times':timings,'docs':doc_list,'docname':nm,'yy':[]})
 
 def medavailcheck(request):
     med = request.POST['med']
@@ -94,7 +109,6 @@ def medavailcheck(request):
         stck = get_list_or_404(MedicineStock,medicine = medicine_obj)
     except:
         return render(request,'healthcenter/medavail.html',{'msg':'Not Available','stck':[{'current_stock':0,'expiry_date':'NA'}],'medname':med})
-    print(stck)
     return render(request,'healthcenter/medavail.html',{'msg':'Available','stck':stck,'medname':med})
 
 def diagnose(request):
@@ -112,7 +126,9 @@ def diagnosepatient(request):
     opd = get_object_or_404(OPDRegistration,pk=opdid)
     pat = get_object_or_404(Patient,pk=opd.patient.cardNo)
     adv = request.POST['adv']
-    bp =  request.POST['bp']
+    systo =  request.POST['systo']
+    diasto =  request.POST['diasto']
+    bp = systo + ' ' + diasto
     weight = request.POST['wt']
     temp = request.POST['temp']
     dia = request.POST['dg']
@@ -143,7 +159,6 @@ def gethistory(request):
 def distribute(request):
     dgsid = request.GET['dgsid']
     dgs = get_object_or_404(MedicalDiagnosis,pk=dgsid)
-    print(dgs)
     return render(request,'healthcenter/distribute.html',{'dgsid':dgsid,'dgs':dgs})
 
 def distributemed(request):
@@ -155,8 +170,12 @@ def distributemed(request):
     while i<len(meds):
         try:
             medicine_obj = Medicine.objects.get(name=meds[i])
+            medicine_stock_obj = MedicineStock.objects.get(medicine=medicine_obj)
         except:
             return render(request,'healthcenter/distribute.html',{'dgsid':dgsid,'dgs':dgs})
+        if medicine_stock_obj.current_stock>=int(qty[i]):
+            medicine_stock_obj.current_stock -= int(qty[i])
+        medicine_stock_obj.save()
         medd = MedicineDistribution(diagnosis=dgs,medicine=medicine_obj,quantity=qty[i])
         medd.save()
         i+=1
@@ -190,3 +209,65 @@ def checkhis(request):
 
 def checkhist(request):
     return render(request,'healthcenter/patlogin.html')
+
+@staff_member_required
+def showgraph(request):
+    return render(request,'healthcenter/graph.html')
+
+@staff_member_required
+def viewgraph(request):
+    sd = request.POST["sd"].split('/')
+    ed = request.POST["ed"].split('/')
+    sdate = str(sd[2]) + '-'+str(sd[1])+ '-' +str(sd[0])
+    edate = str(ed[2]) + '-'+str(ed[1])+ '-' +str(ed[0])
+    opds = OPDRegistration.objects.filter(appoint_date__range=[sdate,edate])
+    presc = MedicineDistribution.objects.filter(diagnosis__opd__appoint_date__range=[sdate,edate])
+    meds = {}
+    mapp = {}
+    mapspec= {}
+    for i in opds:
+        docname = 'Dr. '+i.doctor.emp.first_name + ' '+ i.doctor.emp.last_name  
+        if docname in mapp.keys():
+            xx = mapp[docname]
+            xx+=1
+            mapp[docname] =xx
+        else:
+            mapp[docname]=1
+    for j in opds:
+        docspec = j.doctor.specialization
+        if docspec in mapspec.keys():
+            xx = mapspec[docspec]
+            xx+=1
+            mapspec[docspec] =xx
+        else:
+            mapspec[docspec]=1
+    for k in presc:
+        medicine = k.medicine.name
+        if medicine in meds.keys():
+            xx = meds[medicine]
+            xx+=1
+            meds[medicine]=xx
+        else:
+            meds[medicine]=1 
+    return render(request,'healthcenter/dgraph.html',{'docs':list(mapp.keys()),'count':list(mapp.values()),'specs':list(mapspec.keys()),'meds':list(meds.keys()),'medscount':list(meds.values())})
+
+def makelive(request):
+    opdr = get_object_or_404(OPDRegistration,pk=request.GET['opdid'])
+    opdr.is_live=True
+    opdr.save()
+    return HttpResponseRedirect('/hc/dashboard')
+
+def fbsv(request):
+    fb = Feedback.objects.all()
+    cl = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
+    med = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
+    staff = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
+    sat = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
+    rat = {1:0,2:0,3:0,4:0,5:0}
+    for x in fb:
+        cl[x.cleanliness]+=1
+        med[x.med_availability]+=1
+        staff[x.staff_behaviour]+=1
+        sat[x.overall_satisfaction]+=1
+        rat[x.rating]+=1
+    return render(request,'healthcenter/fbgraph.html',{'cl':list(cl.values()),'med':list(med.values()),'staff':list(staff.values()),'sat':list(sat.values()),'rat':list(rat.values())})

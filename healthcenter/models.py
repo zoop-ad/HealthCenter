@@ -48,6 +48,7 @@ class OPDRegistration(models.Model):
     doctor = models.ForeignKey(Doctor,on_delete=models.CASCADE)
     checked = models.BooleanField(default=False)
     checkup_time = models.TimeField(default=now)
+    is_live = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.id) + '- ' + str(self.patient.name) + ' with Dr. '+ str(self.doctor.emp.first_name)
@@ -57,7 +58,7 @@ class MedicalDiagnosis(models.Model):
     opd = models.ForeignKey(OPDRegistration,on_delete=models.CASCADE)
     advice = models.CharField(max_length=1000)
     timestamp = models.DateTimeField(default=now)
-    bp = models.IntegerField()
+    bp = models.CharField(max_length=1000)
     weight = models.IntegerField()
     temp = models.FloatField()
     diagnosis = models.CharField(max_length=1000)
