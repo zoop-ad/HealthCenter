@@ -15,6 +15,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.utils import timezone
+from django.db.models import Q
 # Create your views here.
 
 def index(request):
@@ -26,10 +27,11 @@ def dashboard(request):
     if request.user.groups.all()[0].name=="Doctor":
         empl = get_object_or_404(Employee,pk=str(request.user))
         doc = Doctor.objects.filter(emp=empl)[0]
+        doclis = Doctor.objects.filter(~Q(emp=empl))
         today = date.today()
         opds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today).filter(is_live=False)
         lopds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today).filter(is_live=True)
-        return render(request,'healthcenter/doctor-dashboard.html',{'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds,'live_pat_list':lopds})
+        return render(request,'healthcenter/doctor-dashboard.html',{'doclis':doclis,'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds,'live_pat_list':lopds})
     elif request.user.groups.all()[0].name=="Pharmacist":
         pst = get_object_or_404(Employee,pk=str(request.user))
         dgs = MedicalDiagnosis.objects.filter(med_given=False)
@@ -111,6 +113,13 @@ def medavailcheck(request):
         return render(request,'healthcenter/medavail.html',{'msg':'Not Available','stck':[{'current_stock':0,'expiry_date':'NA'}],'medname':med})
     return render(request,'healthcenter/medavail.html',{'msg':'Available','stck':stck,'medname':med})
 
+def transfer(request):
+    opdid = request.GET['opdid']
+    opd = get_object_or_404(OPDRegistration,pk=opdid)
+    pat = get_object_or_404(Patient,pk=opd.patient.cardNo)
+    doclis = Doctor.objects.all()
+    return render(request,'healthcenter/transfer.html',{'doclis':doclis,'pat':pat,'opdid':opdid})
+
 def diagnose(request):
     opdid = request.GET['opdid']
     opd = get_object_or_404(OPDRegistration,pk=opdid)
@@ -120,14 +129,23 @@ def diagnose(request):
         history=history[0:5]
     return render(request,'healthcenter/diagnose.html',{'pat':pat,'history':history,'opdid':opdid,'cno':opd.patient.cardNo})
 
+def transferpatient(request):
+    opdid = request.GET['opdid']
+    opd = get_object_or_404(OPDRegistration,pk=opdid)
+    drID = request.POST['docreq']
+    doc = get_object_or_404(Doctor,pk=drID)
+    opd.doctor = doc
+    opd.save()
+    return HttpResponseRedirect('/hc/dashboard')
+
 def diagnosepatient(request):
     opdid = request.GET['opdid']
     cno = request.GET['cno']
     opd = get_object_or_404(OPDRegistration,pk=opdid)
     pat = get_object_or_404(Patient,pk=opd.patient.cardNo)
     adv = request.POST['adv']
-    systo =  request.POST['systo']
-    diasto =  request.POST['diasto']
+    systo = request.POST['systo']
+    diasto = request.POST['diasto']
     bp = systo + ' ' + diasto
     weight = request.POST['wt']
     temp = request.POST['temp']
