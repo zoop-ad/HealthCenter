@@ -274,3 +274,18 @@ def makelive(request):
     opdr.is_live=True
     opdr.save()
     return HttpResponseRedirect('/hc/dashboard')
+
+def fbsv(request):
+    fb = Feedback.objects.all()
+    cl = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
+    med = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
+    staff = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
+    sat = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
+    rat = {1:0,2:0,3:0,4:0,5:0}
+    for x in fb:
+        cl[x.cleanliness]+=1
+        med[x.med_availability]+=1
+        staff[x.staff_behaviour]+=1
+        sat[x.overall_satisfaction]+=1
+        rat[x.rating]+=1
+    return render(request,'healthcenter/fbgraph.html',{'cl':list(cl.values()),'med':list(med.values()),'staff':list(staff.values()),'sat':list(sat.values()),'rat':list(rat.values())})
