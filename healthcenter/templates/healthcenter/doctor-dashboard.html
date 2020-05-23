@@ -137,6 +137,7 @@
                 <th>Serial No.</th>
                 <th>Name</th>
                 <th>Status</th>
+                <th>Transfer</th>
               </tr>
             </thead>
             <tbody>
@@ -149,6 +150,7 @@
                 {% else %}
                 <td><a href="/hc/diagnose?opdid={{p.id}}">Diagnose</a></td>
                 {% endif %}
+                <td><a href="/hc/transfer?opdid={{p.id}}">Transfer</a></td>
               </tr>
               {% endfor %}
             </tbody>
@@ -163,6 +165,7 @@
                 <th>Serial No.</th>
                 <th>Name</th>
                 <th>Status</th>
+                <th>Transfer</th>
               </tr>
             </thead>
             <tbody>
@@ -175,6 +178,7 @@
                 {% else %}
                 <td><a href="/hc/diagnose?opdid={{p.id}}">Diagnose</a></td>
                 {% endif %}
+                <td><a href="/hc/transfer?opdid={{p.id}}">Transfer</a></td>
               </tr>
               {% endfor %}
             </tbody>
