@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+
+    <head>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <title>MNNIT Health Center Portal</title>
+        </head>
+
+        <body>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+            <nav class="navbar navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">MNNIT Health Center Portal Statistics</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarsExample01">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="/hc/">Home</a>
+                    </li>
+                    <li class="nav-link">
+                      <a class="nav-link" href="/hc/fbsv">Feedback Statistics and Visualizations<span class="sr-only">(current)</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+
+              <div class="container py-5">
+                <header class="text-center">
+                    <h1 class="display-4 font-weight-bold"><u>Feedback Statistics and Visualizations</u></h1>
+                    
+                    </p>
+                </header>
+            </div>
+            <h4 class="display-4 font-weight-bold"><center>Cleanliness in Health Center</center></h4>
+            <div id="tester1"></div>
+            <br>
+            <hr>
+            <h4 class="display-4 font-weight-bold"><center>Medicine Availability</center></h4>
+            <div id="tester2"></div>
+            <br>
+            <hr>
+            <h4 class="display-4 font-weight-bold"><center>Health Center Staff Behaviour</center></h4>
+            <div id="tester3"></div>
+            <br>
+            <hr>
+            <h4 class="display-4 font-weight-bold"><center>Overall User Satisfaction</center></h4>
+            <div id="tester4"></div>
+            <br>
+            <hr>
+            <h4 class="display-4 font-weight-bold"><center>Feedback Rating</center></h4>
+            <div id="tester5"></div>
+            <br>
+            <hr>
+        <script>
+            var cl = "{{cl}}";
+            var med = '{{med}}';
+            var staff = "{{staff}}";
+            var sat = "{{sat}}";
+            var rat = "{{rat}}";
+
+            cl=cl.split(',');
+            for(var i=0;i<cl.length;i++)
+            cl[i]=cl[i].substr(1);
+            cl[cl.length-1] = cl[cl.length-1].substr(0,cl[cl.length-1].length-1);
+
+            med=med.split(',');
+            for(var i=0;i<med.length;i++)
+            med[i]=med[i].substr(1);
+            med[med.length-1] = med[med.length-1].substr(0,med[med.length-1].length-1);
+
+            staff=staff.split(',');
+            for(var i=0;i<staff.length;i++)
+            staff[i]=staff[i].substr(1);
+            staff[staff.length-1] = staff[staff.length-1].substr(0,staff[staff.length-1].length-1);
+
+            sat=sat.split(',');
+            for(var i=0;i<sat.length;i++)
+            sat[i]=sat[i].substr(1);
+            sat[sat.length-1] = sat[sat.length-1].substr(0,sat[sat.length-1].length-1);
+
+            rat=rat.split(',');
+            for(var i=0;i<rat.length;i++)
+            rat[i]=rat[i].substr(1);
+            rat[rat.length-1] = rat[rat.length-1].substr(0,rat[rat.length-1].length-1);
+
+            
+            TESTER1 = document.getElementById('tester1');
+            TESTER2 = document.getElementById('tester2');
+            TESTER3 = document.getElementById('tester3');
+            TESTER4 = document.getElementById('tester4');
+            TESTER5 = document.getElementById('tester5');
+            Plotly.newPlot( TESTER1, [{
+            x: ['Poor','Fair','Good','Very Good'],
+            y: cl}], {
+            margin: { t: 0 } } );
+
+            Plotly.newPlot( TESTER2, [{
+            x: ['Poor','Fair','Good','Very Good'],
+            y: med}], {
+            margin: { t: 0 } } );
+
+            Plotly.newPlot( TESTER3, [{
+            x: ['Poor','Fair','Good','Very Good'],
+            y: staff}], {
+            margin: { t: 0 } } );
+
+            Plotly.newPlot( TESTER4, [{
+            x: ['Poor','Fair','Good','Very Good'],
+            y: sat}], {
+            margin: { t: 0 } } );
+
+            Plotly.newPlot( TESTER5, [{
+            x: ['1','2','3','4','5'],
+            y: rat}], {
+            margin: { t: 0 } } );
+
+
+        </script>
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+         
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        </body>
+</html>
