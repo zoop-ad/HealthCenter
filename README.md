@@ -1,4 +1,4 @@
-![Alt Text](https://res.cloudinary.com/practicaldev/image/fetch/s--Gd1J8K7I--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://res.cloudinary.com/practicaldev/image/fetch/s--T-qHraYD--/c_imagga_scale%2Cf_auto%2Cfl_progressive%2Ch_420%2Cq_auto%2Cw_1000/https://dev-to-uploads.s3.amazonaws.com/i/wo9forac2vnio6x25ctv.png)
+![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/8w9t7hlkfbgf787y88z4.png)
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
