@@ -1,5 +1,7 @@
 ![Alt Text](https://res.cloudinary.com/practicaldev/image/fetch/s--Gd1J8K7I--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://res.cloudinary.com/practicaldev/image/fetch/s--T-qHraYD--/c_imagga_scale%2Cf_auto%2Cfl_progressive%2Ch_420%2Cq_auto%2Cw_1000/https://dev-to-uploads.s3.amazonaws.com/i/wo9forac2vnio6x25ctv.png)
 
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
 ## Introduction
 
 The IT system has revolutionized the field of medicine. In this fast-paced world of medicine, it is a daunting task to manage a multi-specialty hospital. Therefore, My teammates and I took the initiative to build a software for out Institute MNNIT, Allahabad. The MNNIT Health Center Portal is a web-based system that facilitates managing the functioning of the hospital.
@@ -38,7 +40,7 @@ It is free and open source.
   <li> <a href="https://github.com/amulyagaur">Amulya Gaur</a></li>
   <li> <a href="https://github.com/zoop-ad">Aditya Sharma</a></li>
   <li> <a href="https://github.com/rickyric395">Harsh Singh</a></li>
-  <li> <a href="https://www.facebook.com/profile.php?id=100049720301343">Harsh Gupta</a></li>
+  <li> <a href="https://github.com/devil6399">Harsh Gupta</a></li>
 </ul>
 
 ## Contribute
