@@ -165,7 +165,7 @@ def submitfeedback(request):
     otp = randint(100000,999999)
     fb = Feedback(name=request.POST['name'],email=request.POST['email'],review=request.POST['review'],cleanliness=request.POST['radio'],med_availability=request.POST['radio1'],staff_behaviour=request.POST['radio2'],overall_satisfaction=request.POST['radio3'],rating=request.POST['rating'],suggestion=request.POST['suggestion'],otp=otp,verified=False)
     fb.save()    
-    send_mail('MNNIT Health Center Feedback Verification OTP','Your OTP is - '+str(otp),'amulya@mnnit.ac.in',[str(fb.email)],fail_silently=False)
+    send_mail('MNNIT Health Center Feedback Verification OTP','Your OTP is - '+str(otp),'healthcenter@mnnit.ac.in',[str(fb.email)],fail_silently=False)
     return render(request,'healthcenter/verify.html',{'em':fb.email,'fbid':fb.id,'fl':1})
 
 def gethistory(request):
