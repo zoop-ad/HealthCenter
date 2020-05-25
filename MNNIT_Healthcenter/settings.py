@@ -23,12 +23,12 @@ SENDGRID_SANDBOX_MODE_IN_DEBUG=False
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9yys*wo7$v8)+i=_#kp(+y$$9#sz89p&#9qsx3rywq^x)g0p&l'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.29.34.139','localhost','192.168.43.182','radiant-hamlet-14644..herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','radiant-hamlet-14644..herokuapp.com']
 
 # Application definition
 

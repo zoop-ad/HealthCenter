@@ -201,7 +201,7 @@ def distributemed(request):
     dgs.save()
     mq =zip(meds,qty)
     html_message = render_to_string('healthcenter/receipt.html',{'dgs':dgs,'pat':dgs.patient,'mq':mq})
-    send_mail("MNNIT Health Center OPD Receipt","",'amulya@mnnit.ac.in',[str(dgs.patient.emailid)],fail_silently=False,html_message=html_message)
+    send_mail("MNNIT Health Center OPD Receipt","",'healthcenter@mnnit.ac.in',[str(dgs.patient.emailid)],fail_silently=False,html_message=html_message)
     return render(request,'healthcenter/front.html',{'msg':'Medicine Distributed successfully!'})
 
 def verifyOTP(request):
