@@ -23,7 +23,7 @@ SENDGRID_SANDBOX_MODE_IN_DEBUG=False
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = '9yys*wo7$v8)+i=_#kp(+y$$9#sz89p&#9qsx3rywq^x)g0p&l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
