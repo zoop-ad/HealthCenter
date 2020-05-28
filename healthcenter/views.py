@@ -288,13 +288,15 @@ def fbsv(request):
     staff = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
     sat = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
     rat = {1:0,2:0,3:0,4:0,5:0}
+    sen = {'Positive':0,'Negative':0,'Neutral':0}
     for x in fb:
         cl[x.cleanliness]+=1
         med[x.med_availability]+=1
         staff[x.staff_behaviour]+=1
         sat[x.overall_satisfaction]+=1
         rat[x.rating]+=1
-    return render(request,'healthcenter/fbgraph.html',{'cl':list(cl.values()),'med':list(med.values()),'staff':list(staff.values()),'sat':list(sat.values()),'rat':list(rat.values())})
+        sen[x.sentiment]+=1
+    return render(request,'healthcenter/fbgraph.html',{'cl':list(cl.values()),'med':list(med.values()),'staff':list(staff.values()),'sat':list(sat.values()),'rat':list(rat.values()),'sen':list(sen.values())})
 
 def tagallfb(request):
     fb = Feedback.objects.all()

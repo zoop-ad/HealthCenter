@@ -43,12 +43,17 @@
             <div id="myydiv"></div>
             <br>
             <hr>
+            <h4 class="display-4 font-weight-bold"><center>Feedback Sentiment Analysis</center></h4>
+            <div id="myydivs"></div>
+            <br>
+            <hr>
         <script>
             var cl = "{{cl}}";
             var med = '{{med}}';
             var staff = "{{staff}}";
             var sat = "{{sat}}";
             var rat = "{{rat}}";
+            var sen = "{{sen}}";
 
             cl=cl.split(',');
             for(var i=0;i<cl.length;i++)
@@ -74,6 +79,11 @@
             for(var i=0;i<rat.length;i++)
             rat[i]=rat[i].substr(1);
             rat[rat.length-1] = rat[rat.length-1].substr(0,rat[rat.length-1].length-1);
+
+            sen=sen.split(',');
+            for(var i=0;i<sen.length;i++)
+            sen[i]=sen[i].substr(1);
+            sen[sen.length-1] = sen[sen.length-1].substr(0,sen[sen.length-1].length-1);
 
             TESTER5 = document.getElementById('tester5');
           
@@ -107,6 +117,15 @@
               name:'Overall Satisfaction'
             };
             var data = [tr1, trace2,trace3, trace4];
+
+            var data1 = [
+  {
+    x: ['Positive','Negative','Neutral'],
+    y: sen,
+    type: 'bar'
+  }
+];
+Plotly.newPlot('myydivs', data1);
 
 Plotly.newPlot('myydiv', data);
 
