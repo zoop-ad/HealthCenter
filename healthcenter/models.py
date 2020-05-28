@@ -79,6 +79,7 @@ class Feedback(models.Model):
     suggestion = models.CharField(max_length=5000)
     otp = models.IntegerField(default=123456)
     verified = models.BooleanField(default=False)
+    sentiment = models.CharField(max_length = 50, default='Positive')
 
 class Medicine(models.Model):
     name = models.CharField(max_length=100)

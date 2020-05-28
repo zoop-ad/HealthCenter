@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 from django.db.models import Q
+from monkeylearn import MonkeyLearn
 # Create your views here.
 
 def index(request):
@@ -210,6 +211,11 @@ def verifyOTP(request):
     otp = int(str(request.POST['d1'])+str(request.POST['d2'])+str(request.POST['d3'])+str(request.POST['d4'])+str(request.POST['d5'])+str(request.POST['d6']))
     if otp==fb.otp:
         fb.verified=True
+        ml = MonkeyLearn('2996cb83b0f2c42cdd8d5785a11d5609b7db736d')
+        data = [fb.review]
+        model_id = 'cl_pi3C7JiL'
+        result = ml.classifiers.classify(model_id, data)
+        fb.sentiment = result.body[0]["classifications"][0]["tag_name"]
         fb.save()
         return render(request,'healthcenter/thanks.html')
     else:
@@ -289,3 +295,15 @@ def fbsv(request):
         sat[x.overall_satisfaction]+=1
         rat[x.rating]+=1
     return render(request,'healthcenter/fbgraph.html',{'cl':list(cl.values()),'med':list(med.values()),'staff':list(staff.values()),'sat':list(sat.values()),'rat':list(rat.values())})
+
+def tagallfb(request):
+    fb = Feedback.objects.all()
+    ml = MonkeyLearn('2996cb83b0f2c42cdd8d5785a11d5609b7db736d')
+    model_id = 'cl_pi3C7JiL'
+    for x in fb:
+        data = [x.review]
+        result = ml.classifiers.classify(model_id, data)
+        x.sentiment = result.body[0]["classifications"][0]["tag_name"]
+        print(x.review , ' ',x.sentiment)
+        x.save()
+    return HttpResponseRedirect('/hc')
