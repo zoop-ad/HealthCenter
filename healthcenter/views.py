@@ -30,8 +30,8 @@ def dashboard(request):
         doc = Doctor.objects.filter(emp=empl)[0]
         doclis = Doctor.objects.filter(~Q(emp=empl))
         today = date.today()
-        opds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today).filter(is_live=False)
-        lopds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today).filter(is_live=True)
+        opds = OPDRegistration.objects.filter(doctor=doc).filter(checked=False).filter(is_live=False)
+        lopds = OPDRegistration.objects.filter(doctor=doc).filter(checked=False).filter(is_live=True)
         return render(request,'healthcenter/doctor-dashboard.html',{'doclis':doclis,'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds,'live_pat_list':lopds})
     elif request.user.groups.all()[0].name=="Pharmacist":
         pst = get_object_or_404(Employee,pk=str(request.user))

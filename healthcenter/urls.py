@@ -31,4 +31,3 @@ urlpatterns = [
     path('fbsv',views.fbsv),
     path('tall',views.tagallfb)
 ]
-
