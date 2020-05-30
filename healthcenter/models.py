@@ -49,7 +49,7 @@ class OPDRegistration(models.Model):
     checked = models.BooleanField(default=False)
     checkup_time = models.TimeField(default=now)
     is_live = models.BooleanField(default=False)
-    registration_date = models.DateField(default =date.today)
+    registration_date = models.DateField(auto_now_add=True)
     
     def __str__(self):
         return str(self.id) + '- ' + str(self.patient.name) + ' with Dr. '+ str(self.doctor.emp.first_name)
