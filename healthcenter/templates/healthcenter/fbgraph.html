@@ -33,24 +33,18 @@
                     </p>
                 </header>
             </div>
-            <h4 class="display-4 font-weight-bold"><center>Cleanliness in Health Center</center></h4>
-            <div id="tester1"></div>
-            <br>
-            <hr>
-            <h4 class="display-4 font-weight-bold"><center>Medicine Availability</center></h4>
-            <div id="tester2"></div>
-            <br>
-            <hr>
-            <h4 class="display-4 font-weight-bold"><center>Health Center Staff Behaviour</center></h4>
-            <div id="tester3"></div>
-            <br>
-            <hr>
-            <h4 class="display-4 font-weight-bold"><center>Overall User Satisfaction</center></h4>
-            <div id="tester4"></div>
-            <br>
+            
             <hr>
             <h4 class="display-4 font-weight-bold"><center>Feedback Rating</center></h4>
             <div id="tester5"></div>
+            <br>
+            <hr>
+            <h4 class="display-4 font-weight-bold"><center>Feedback Comparison on various parameters</center></h4>
+            <div id="myydiv"></div>
+            <br>
+            <hr>
+            <h4 class="display-4 font-weight-bold"><center>Feedback Sentiment Analysis</center></h4>
+            <div id="myydivs"></div>
             <br>
             <hr>
         <script>
@@ -59,6 +53,7 @@
             var staff = "{{staff}}";
             var sat = "{{sat}}";
             var rat = "{{rat}}";
+            var sen = "{{sen}}";
 
             cl=cl.split(',');
             for(var i=0;i<cl.length;i++)
@@ -85,37 +80,54 @@
             rat[i]=rat[i].substr(1);
             rat[rat.length-1] = rat[rat.length-1].substr(0,rat[rat.length-1].length-1);
 
-            
-            TESTER1 = document.getElementById('tester1');
-            TESTER2 = document.getElementById('tester2');
-            TESTER3 = document.getElementById('tester3');
-            TESTER4 = document.getElementById('tester4');
+            sen=sen.split(',');
+            for(var i=0;i<sen.length;i++)
+            sen[i]=sen[i].substr(1);
+            sen[sen.length-1] = sen[sen.length-1].substr(0,sen[sen.length-1].length-1);
+
             TESTER5 = document.getElementById('tester5');
-            Plotly.newPlot( TESTER1, [{
-            x: ['Poor','Fair','Good','Very Good'],
-            y: cl}], {
-            margin: { t: 0 } } );
-
-            Plotly.newPlot( TESTER2, [{
-            x: ['Poor','Fair','Good','Very Good'],
-            y: med}], {
-            margin: { t: 0 } } );
-
-            Plotly.newPlot( TESTER3, [{
-            x: ['Poor','Fair','Good','Very Good'],
-            y: staff}], {
-            margin: { t: 0 } } );
-
-            Plotly.newPlot( TESTER4, [{
-            x: ['Poor','Fair','Good','Very Good'],
-            y: sat}], {
-            margin: { t: 0 } } );
-
+          
             Plotly.newPlot( TESTER5, [{
             x: ['1','2','3','4','5'],
             y: rat}], {
             margin: { t: 0 } } );
 
+            var tr1 = {
+              x: ['Poor','Fair','Good','Very Good'],
+              y: cl,
+              type: 'scatter',
+              name:'Cleanliness'
+            };
+            var trace2 = {
+              x: ['Poor','Fair','Good','Very Good'],
+              y: med,
+              type: 'scatter',
+              name:'Medicine Availability'
+            };
+            var trace3 = {
+              x: ['Poor','Fair','Good','Very Good'],
+              y: staff,
+              type: 'scatter',
+              name:'Staff Behaviour'
+            };
+            var trace4 = {
+              x: ['Poor','Fair','Good','Very Good'],
+              y: sat,
+              type: 'scatter',
+              name:'Overall Satisfaction'
+            };
+            var data = [tr1, trace2,trace3, trace4];
+
+            var data1 = [
+  {
+    x: ['Positive','Negative','Neutral'],
+    y: sen,
+    type: 'bar'
+  }
+];
+Plotly.newPlot('myydivs', data1);
+
+Plotly.newPlot('myydiv', data);
 
         </script>
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">

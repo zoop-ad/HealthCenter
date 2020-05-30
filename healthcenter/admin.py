@@ -53,7 +53,7 @@ class OPDRegistrationAdmin(admin.ModelAdmin):
     pat_name.short_description='Patient Name'
 
 class FeedbackAdmin(admin.ModelAdmin):
-    list_display = ('name','email','rating')
+    list_display = ('name','email','rating','sentiment')
 
 class MedicineAdmin(admin.ModelAdmin):
     list_display = ('id' , 'name','shortage_quantity')

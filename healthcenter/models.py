@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from datetime import datetime,date
 from django.utils.timezone import now
 # Create your models here.
 
@@ -49,7 +49,8 @@ class OPDRegistration(models.Model):
     checked = models.BooleanField(default=False)
     checkup_time = models.TimeField(default=now)
     is_live = models.BooleanField(default=False)
-
+    registration_date = models.DateField(auto_now_add=True)
+    
     def __str__(self):
         return str(self.id) + '- ' + str(self.patient.name) + ' with Dr. '+ str(self.doctor.emp.first_name)
 
@@ -79,6 +80,7 @@ class Feedback(models.Model):
     suggestion = models.CharField(max_length=5000)
     otp = models.IntegerField(default=123456)
     verified = models.BooleanField(default=False)
+    sentiment = models.CharField(max_length = 50, default='Positive')
 
 class Medicine(models.Model):
     name = models.CharField(max_length=100)

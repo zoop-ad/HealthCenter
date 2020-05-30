@@ -28,6 +28,6 @@ urlpatterns = [
     path('makelive',views.makelive),
     path('transfer',views.transfer),
     path('transferpatient',views.transferpatient),
-    path('fbsv',views.fbsv)
+    path('fbsv',views.fbsv),
+    path('tall',views.tagallfb)
 ]
-

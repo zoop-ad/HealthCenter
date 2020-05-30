@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 from django.db.models import Q
+from monkeylearn import MonkeyLearn
 # Create your views here.
 
 def index(request):
@@ -29,8 +30,8 @@ def dashboard(request):
         doc = Doctor.objects.filter(emp=empl)[0]
         doclis = Doctor.objects.filter(~Q(emp=empl))
         today = date.today()
-        opds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today).filter(is_live=False)
-        lopds = OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=today).filter(is_live=True)
+        opds = OPDRegistration.objects.filter(doctor=doc).filter(checked=False).filter(is_live=False)
+        lopds = OPDRegistration.objects.filter(doctor=doc).filter(checked=False).filter(is_live=True)
         return render(request,'healthcenter/doctor-dashboard.html',{'doclis':doclis,'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds,'live_pat_list':lopds})
     elif request.user.groups.all()[0].name=="Pharmacist":
         pst = get_object_or_404(Employee,pk=str(request.user))
@@ -165,7 +166,7 @@ def submitfeedback(request):
     otp = randint(100000,999999)
     fb = Feedback(name=request.POST['name'],email=request.POST['email'],review=request.POST['review'],cleanliness=request.POST['radio'],med_availability=request.POST['radio1'],staff_behaviour=request.POST['radio2'],overall_satisfaction=request.POST['radio3'],rating=request.POST['rating'],suggestion=request.POST['suggestion'],otp=otp,verified=False)
     fb.save()    
-    send_mail('MNNIT Health Center Feedback Verification OTP','Your OTP is - '+str(otp),'amulya@mnnit.ac.in',[str(fb.email)],fail_silently=False)
+    send_mail('MNNIT Health Center Feedback Verification OTP','Your OTP is - '+str(otp),'healthcenter@mnnit.ac.in',[str(fb.email)],fail_silently=False)
     return render(request,'healthcenter/verify.html',{'em':fb.email,'fbid':fb.id,'fl':1})
 
 def gethistory(request):
@@ -201,7 +202,7 @@ def distributemed(request):
     dgs.save()
     mq =zip(meds,qty)
     html_message = render_to_string('healthcenter/receipt.html',{'dgs':dgs,'pat':dgs.patient,'mq':mq})
-    send_mail("MNNIT Health Center OPD Receipt","",'amulya@mnnit.ac.in',[str(dgs.patient.emailid)],fail_silently=False,html_message=html_message)
+    send_mail("MNNIT Health Center OPD Receipt","",'healthcenter@mnnit.ac.in',[str(dgs.patient.emailid)],fail_silently=False,html_message=html_message)
     return render(request,'healthcenter/front.html',{'msg':'Medicine Distributed successfully!'})
 
 def verifyOTP(request):
@@ -210,6 +211,11 @@ def verifyOTP(request):
     otp = int(str(request.POST['d1'])+str(request.POST['d2'])+str(request.POST['d3'])+str(request.POST['d4'])+str(request.POST['d5'])+str(request.POST['d6']))
     if otp==fb.otp:
         fb.verified=True
+        ml = MonkeyLearn('2996cb83b0f2c42cdd8d5785a11d5609b7db736d')
+        data = [fb.review]
+        model_id = 'cl_pi3C7JiL'
+        result = ml.classifiers.classify(model_id, data)
+        fb.sentiment = result.body[0]["classifications"][0]["tag_name"]
         fb.save()
         return render(request,'healthcenter/thanks.html')
     else:
@@ -282,10 +288,24 @@ def fbsv(request):
     staff = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
     sat = {'Poor':0,'Fair':0,'Good':0,'Very Good':0}
     rat = {1:0,2:0,3:0,4:0,5:0}
+    sen = {'Positive':0,'Negative':0,'Neutral':0}
     for x in fb:
         cl[x.cleanliness]+=1
         med[x.med_availability]+=1
         staff[x.staff_behaviour]+=1
         sat[x.overall_satisfaction]+=1
         rat[x.rating]+=1
-    return render(request,'healthcenter/fbgraph.html',{'cl':list(cl.values()),'med':list(med.values()),'staff':list(staff.values()),'sat':list(sat.values()),'rat':list(rat.values())})
+        sen[x.sentiment]+=1
+    return render(request,'healthcenter/fbgraph.html',{'cl':list(cl.values()),'med':list(med.values()),'staff':list(staff.values()),'sat':list(sat.values()),'rat':list(rat.values()),'sen':list(sen.values())})
+
+def tagallfb(request):
+    fb = Feedback.objects.all()
+    ml = MonkeyLearn('2996cb83b0f2c42cdd8d5785a11d5609b7db736d')
+    model_id = 'cl_pi3C7JiL'
+    for x in fb:
+        data = [x.review]
+        result = ml.classifiers.classify(model_id, data)
+        x.sentiment = result.body[0]["classifications"][0]["tag_name"]
+        print(x.review , ' ',x.sentiment)
+        x.save()
+    return HttpResponseRedirect('/hc')
