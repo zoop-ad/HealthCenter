@@ -23,6 +23,20 @@
         -ms-user-select: none;
         user-select: none;
       }
+      .datepicker td, .datepicker th {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.85rem;
+}
+
+.datepicker-dropdown {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.datepicker {
+    margin-bottom: 3rem;
+}
+
+
 
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
@@ -34,6 +48,7 @@
     <link href="{% static 'healthcenter/dashboard.css' %}" rel="stylesheet">
   </head>
   <body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">MNNIT Health Center Portal</a>
   <ul class="navbar-nav px-3">
@@ -55,69 +70,46 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a href ="/hc/medavail" class="nav-link" >
               <span data-feather="file"></span>
-              Options
+              Check medicine availability
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="shopping-cart"></span>
-              Options
+            <a class="nav-link" href="/hc/feedback">
+              <span data-feather="file"></span>
+              Add feedback
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="users"></span>
-              Options
+            <a class="nav-link" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
+              <span data-feather="file"></span>
+              See patient list
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Options
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="layers"></span>
-              Options
-            </a>
+            <div class="collapse multi-collapse" id="multiCollapseExample1">
+              <div class="card card-body">
+                <div class="py-2 text-center"><i class="fa fa-calendar fa-3x"></i></div>
+                <form method="POST" action="/hc/seepatlist?docid={{doc.id}}">{% csrf_token %}
+                <div class="form-group mb-2">
+                  <div class="datepicker date input-group p-0 shadow-sm">
+                      <input type="text" placeholder="Choose date" class="form-control py-3 px-1" id="reservationDate" name="dt">
+                      <div class="input-group-append"><span class="input-group-text px-2"><i class="fa fa-clock-o"></i></span></div>
+                  </div>
+              </div>
+              <script>
+                var doc="{{doc}}";
+                console.log(doc);
+              </script>
+
+              <div class="text-center">
+                <button type="submit"  class="btn btn-primary btn-sm px-3 rounded-pill text-uppercase font-weight-bold shadow-sm">Go!</button>
+              </form>
+            </div>
+            </div>
           </li>
         </ul>
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Saved reports</span>
-          <a class="d-flex align-items-center text-muted" href="#">
-            <span data-feather="plus-circle"></span>
-          </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Option 1
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Option 2
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Option 3
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Option 4
-            </a>
-          </li>
-        </ul>
+        
       </div>
     </nav>
 
@@ -181,9 +173,34 @@
     </main>
   </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+<script>
+  $(function () {
+
+// INITIALIZE DATEPICKER PLUGIN
+$('.datepicker').datepicker({
+clearBtn: true,
+format: "dd/mm/yyyy"
+});
+
+
+// FOR DEMO PURPOSE
+$('#reservationDate').on('change', function () {
+var pickedDate = $('input').val();
+$('#pickedDate').html(pickedDate);
+});
+});
+</script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-        <script src="{% static 'healthcenter/dashboard.js' %}"></script></body>
+        <script src="{% static 'healthcenter/dashboard.js' %}"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+      </body>
 </html>

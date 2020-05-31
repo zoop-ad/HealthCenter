@@ -1,0 +1,162 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>See patient list</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/checkout/">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+    <!-- Bootstrap core CSS -->
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'healthcenter/form-validation.css' %}" rel="stylesheet">
+  </head>
+  <body class="bg-light">
+    <div class="container">
+  <div class="py-5 text-center">
+    <img class="d-block mx-auto mb-4" src="{% static 'healthcenter/images/logo.png' %}" alt="" width="72" height="72">
+    <h2>See patient list for {{nomenclature}} on {{date}}</h2>
+  </div>
+  <script>
+      var opds= "{{opds}}";
+      console.log(opds);
+  </script>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+            <th>Serial No.</th>
+            <th>Name</th>
+            <th>See history</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pat in opds %}
+            <tr>
+                <td>
+                    {{forloop.counter}}
+                </td>
+                <td>
+                    {{pat.patient.name}}
+                </td>
+                <td>
+                  <a href="/hc/gethistory?cno={{pat.patient.cardNo}}">See history</a>
+                </td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+
+  <!-- <div class="row">
+      <div class="col-md-4 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            {% if docname %}
+            <span class="text-muted">{{docname}}</span>
+            <span class="badge badge-secondary badge-pill">{{times|length}}</span>
+            {% else %}
+            <span class="text-muted">Available Doctors</span>
+            <span class="badge badge-secondary badge-pill">{{yy|length}}</span>
+            {% endif %}
+          </h4>
+          <ul class="list-group mb-3">
+            {% for y in yy  %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Dr.{{y.first_name}} {{y.last_name}}</h6>
+              </div>
+              
+            </li>
+            {% endfor %}
+            {%for x in times%}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">{{x.day}}</h6>
+              </div>
+              <span class="text-muted">{{x.in_time}} - {{x.out_time}}</span>
+            </li>
+            {% endfor %}
+          </ul>
+    
+          
+        </div>
+    <div class="col-md-8 order-md-1">
+      <form class="needs-validation" method="POST" action="/hc/docavailcheck" novalidate>
+        {% csrf_token %}
+        <div class="row">
+                <div class="col-md-9 mb-3">
+                  <label for="country">Choose Doctor</label>
+                  <select class="custom-select d-block w-100" id="country" name="docreq" required>
+                      {% for dd in docs %}
+              <option value='{{dd.id}}'>Dr. {{dd.emp.first_name}} {{dd.emp.last_name}} - {{dd.specialization}}</option>
+              {% endfor %}
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select a doctor.
+                  </div>
+                </div>
+
+                <div class="col-md-9 mb-3">
+                    <label for="country">Day</label>
+                    <select class="custom-select d-block w-100" id="country" name="day" required>
+                      <option value='SUN'>Sunday</option>
+                      <option value='MON'>Monday</option>
+                      <option value='TUE'>Tuesday</option>
+                      <option value='WED'>Wednesday</option>
+                      <option value='THU'>Thursday</option>
+                      <option value='FRI'>Friday</option>
+                      <option value='SAT'>Saturday</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please select a valid sex.
+                    </div>
+                  </div>
+                
+                
+              </div>
+
+        
+
+        <hr class="mb-4">
+
+        <button class="btn btn-primary btn-lg " type="submit">Search</button>
+      </form>
+      <br>
+      <form method="GET" action="/hc">
+        <button class="btn btn-primary btn-lg " type="submit">Back to Home</button>
+
+      </form>
+    </div>
+  </div>
+ -->
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script>
+        <script src="{% static 'healthcenter/form-validation.js' %}"></script></body>
+</html>

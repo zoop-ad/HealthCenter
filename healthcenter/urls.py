@@ -29,5 +29,6 @@ urlpatterns = [
     path('transfer',views.transfer),
     path('transferpatient',views.transferpatient),
     path('fbsv',views.fbsv),
-    path('tall',views.tagallfb)
+    path('tall',views.tagallfb),
+    path('seepatlist',views.seepatlist)
 ]

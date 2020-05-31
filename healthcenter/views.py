@@ -32,7 +32,7 @@ def dashboard(request):
         today = date.today()
         opds = OPDRegistration.objects.filter(doctor=doc).filter(checked=False).filter(is_live=False)
         lopds = OPDRegistration.objects.filter(doctor=doc).filter(checked=False).filter(is_live=True)
-        return render(request,'healthcenter/doctor-dashboard.html',{'doclis':doclis,'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds,'live_pat_list':lopds})
+        return render(request,'healthcenter/doctor-dashboard.html',{'doc':doc,'doclis':doclis,'msg':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name , 'pat_list':opds,'live_pat_list':lopds})
     elif request.user.groups.all()[0].name=="Pharmacist":
         pst = get_object_or_404(Employee,pk=str(request.user))
         dgs = MedicalDiagnosis.objects.filter(med_given=False)
@@ -309,3 +309,12 @@ def tagallfb(request):
         print(x.review , ' ',x.sentiment)
         x.save()
     return HttpResponseRedirect('/hc')
+
+def seepatlist(request):
+    dt=request.POST["dt"].split('/')
+    date = str(dt[2]) + '-'+str(dt[1])+ '-' +str(dt[0])
+    visibledate = str(dt[0]) + '-'+str(dt[1])+ '-' +str(dt[2])
+    docid=request.GET['docid']
+    doc=get_object_or_404(Doctor,pk=docid)
+    opds=OPDRegistration.objects.filter(doctor=doc).filter(appoint_date=date)
+    return render(request,'healthcenter/seepatlist.html',{'nomenclature':'Dr. ' + doc.emp.first_name + ' '+doc.emp.last_name,'date':visibledate,'opds':opds})
